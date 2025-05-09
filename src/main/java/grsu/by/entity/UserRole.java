@@ -12,11 +12,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "user_roles")
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Table(name = "user_roles")
 public class UserRole {
 
     @Id

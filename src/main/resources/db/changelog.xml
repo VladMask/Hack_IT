@@ -5,8 +5,68 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
 
-<!--    <changeSet id="01.create-users" author="Vladislav Maskevich">-->
-<!--        <sqlFile encoding="utf8" path="./sql/01.create-users-table.sql" relativeToChangelogFile="true"/>-->
-<!--    </changeSet>-->
+    <changeSet id="01.create-users" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/01.create-users-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="02.create-hackathons" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/02.create-hackathons-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="03.create-roles" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/03.create-roles-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="04.create-teams" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/04.create-teams-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="05.create-credentials" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/05.create-credentials-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="06.create-user_roles" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/06.create-user_roles-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="07.create-team_hackathons" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/07.create-team_hackathons-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="08.create-user_hackathons" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/08.create-user_hackathons-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="09.create-solutions" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/09.create-solutions-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="10.create-feedbacks" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/10.create-feedbacks-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="11.create-notifications" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/11.create-notifications-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="12.create-user_teams" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/12.create-user_teams-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="13.create-applications" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/13.create-applications-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="14.create-user_notifications" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/14.create-user_notifications-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="15.create-scores" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/15.create-scores-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="16.create-prizes" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/16.create-prizes-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
 
 </databaseChangeLog>

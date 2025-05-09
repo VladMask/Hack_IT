@@ -16,7 +16,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.OffsetDateTime;
@@ -24,7 +23,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -67,8 +65,13 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<UserTeam> userTeams;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<UserHackathon> userHackathons;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_hackathons",
+            joinColumns = @JoinColumn(name = "user_role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "hackathon_id", referencedColumnName = "id")
+    )
+    private Set<Hackathon> hackathons;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
