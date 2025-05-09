@@ -45,5 +45,5 @@ public class Application {
     private OffsetDateTime submittedAt;
 
     @Column(name = "is_accepted")
-    private Boolean isAccepted;
+    private Boolean isAccepted = false;
 }

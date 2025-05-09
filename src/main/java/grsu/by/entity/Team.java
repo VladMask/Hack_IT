@@ -33,7 +33,7 @@ public class Team {
     private String name;
 
     @Column(name = "is_active")
-    private Boolean isActive;
+    private Boolean isActive = false;
 
     @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
     private Set<UserTeam> userTeams;
