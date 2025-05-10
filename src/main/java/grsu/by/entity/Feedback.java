@@ -14,6 +14,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.OffsetDateTime;
 
@@ -46,8 +48,10 @@ public class Feedback {
     private Solution solution;
 
     @Column(name = "created_at")
+    @CreationTimestamp
     private OffsetDateTime createdAt;
 
     @Column(name = "updated_at")
+    @UpdateTimestamp
     private OffsetDateTime updatedAt;
 }
