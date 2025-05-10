@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.OffsetDateTime;
 
@@ -42,6 +43,7 @@ public class Application {
     private String projectDescription;
 
     @Column(name = "submitted_at")
+    @CreationTimestamp
     private OffsetDateTime submittedAt;
 
     @Column(name = "is_accepted")

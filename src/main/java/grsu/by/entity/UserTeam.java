@@ -36,5 +36,5 @@ public class UserTeam {
     private Team team;
 
     @Column(name = "is_leader")
-    private Boolean isLeader;
+    private Boolean isLeader = false;
 }

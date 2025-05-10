@@ -37,10 +37,8 @@ public class TeamHackathon {
     private Hackathon hackathon;
 
     @Column(name = "is_winner")
-    private Boolean isWinner;
+    private Boolean isWinner = false;
 
     @Column(name = "place")
     private Integer place;
 }
-
-

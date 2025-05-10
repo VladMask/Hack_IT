@@ -15,6 +15,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
@@ -41,10 +42,11 @@ public class Solution {
     private Team team;
 
     @Column(name = "submitted_at")
+    @CreationTimestamp
     private OffsetDateTime submittedAt;
 
     @Column(name = "is_git_repository")
-    private Boolean isGitRepository;
+    private Boolean isGitRepository = false;
 
     @Column(name = "repository_url")
     private String repositoryUrl;

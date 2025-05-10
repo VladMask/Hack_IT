@@ -1,7 +1,6 @@
-package grsu.by.dto.userDto;
+package grsu.by.dto.teamDto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,16 +9,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class UserBaseDto {
+public class TeamCreationDto {
     private Long id;
     @NotBlank
-    private String firstname;
-    @NotBlank
-    private String lastname;
-    @NotNull
-    private String username;
-    private String avatarUrl;
+    private String name;
 }
+
+

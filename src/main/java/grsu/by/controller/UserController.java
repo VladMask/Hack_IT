@@ -46,7 +46,6 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         if (service.deleteById(id)) {
             return ResponseEntity
@@ -60,21 +59,21 @@ public class UserController {
         }
     }
 
-//    @PostMapping("/{userId}/roles")
-//    @ResponseStatus(HttpStatus.OK)
-//    @PreAuthorize("hasAuthority('ADMIN')")
-//    public ResponseEntity<?> setUserRole(@PathVariable Long userId, @RequestParam String roleName){
-//        if (service.setUserRole(userId, roleName)) {
-//            return ResponseEntity
-//                    .status(HttpStatus.OK)
-//                    .body("Role set successfully");
-//        }
-//        else {
-//            return ResponseEntity
-//                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body("An unexpected error has occurred");
-//        }
-//
-//    }
+    @PostMapping("/{userId}/roles")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> setUserRole(@PathVariable Long userId, @RequestParam String roleName){
+        if (service.setUserRole(userId, roleName)) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Role set successfully");
+        }
+        else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error has occurred");
+        }
+
+    }
 }
 

@@ -50,7 +50,7 @@ public class Hackathon implements Serializable {
     private String photosUrl;
 
     @Column(name = "is_finished")
-    private Boolean isFinished;
+    private Boolean isFinished = false;
 
     @Column(name = "registration_start")
     private OffsetDateTime registrationStart;
@@ -94,7 +94,7 @@ public class Hackathon implements Serializable {
             joinColumns = @JoinColumn(name = "user_role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "hackathon_id", referencedColumnName = "id")
     )
-    private Set<User> users;
+    private Set<User> judges;
 
     @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY)
     private Set<Prize> prizes;
