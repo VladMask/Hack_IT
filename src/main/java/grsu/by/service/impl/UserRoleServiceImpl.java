@@ -76,4 +76,19 @@ public class UserRoleServiceImpl implements UserRoleService {
         }
         return true;
     }
+
+    @Override
+    public boolean addRoleToUser(Long userId, Long roleId) {
+        return false;
+    }
+
+    @Override
+    public boolean removeRoleFromUser(Long userId, Long roleId) {
+        return false;
+    }
+
+    @Override
+    public boolean hasRole(Long userId, Long roleId) {
+        return false;
+    }
 }

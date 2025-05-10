@@ -17,6 +17,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -84,5 +86,20 @@ public class FeedbackServiceImpl implements FeedbackService {
             throw ExceptionUtil.throwEntityDeletionException(Feedback.class, id.toString());
         }
         return true;
+    }
+
+    @Override
+    public List<FeedbackDto> findByJudgeId(Long judgeId) {
+        return List.of();
+    }
+
+    @Override
+    public List<FeedbackDto> findBySolutionId(Long solutionId) {
+        return List.of();
+    }
+
+    @Override
+    public List<FeedbackDto> findByHackathonId(Long hackathonId) {
+        return List.of();
     }
 }

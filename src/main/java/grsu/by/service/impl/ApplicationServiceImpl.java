@@ -15,6 +15,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -82,6 +84,16 @@ public class ApplicationServiceImpl implements ApplicationService {
             throw ExceptionUtil.throwEntityDeletionException(Application.class, id.toString());
         }
         return true;
+    }
+
+    @Override
+    public List<ApplicationDto> findByTeamId(Long teamId) {
+        return List.of();
+    }
+
+    @Override
+    public List<ApplicationDto> findByHackathonId(Long hackathonId) {
+        return List.of();
     }
 }
 

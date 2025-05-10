@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -67,5 +69,20 @@ public class ScoreServiceImpl implements ScoreService {
             throw ExceptionUtil.throwEntityDeletionException(Score.class, id.toString());
         }
         return true;
+    }
+
+    @Override
+    public List<ScoreDto> findAll() {
+        return List.of();
+    }
+
+    @Override
+    public List<ScoreDto> findBySolutionId(Long solutionId) {
+        return List.of();
+    }
+
+    @Override
+    public List<ScoreDto> findByJudgeId(Long judgeId) {
+        return List.of();
     }
 }

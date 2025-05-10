@@ -70,4 +70,19 @@ public class TeamHackathonServiceImpl implements TeamHackathonService {
         }
         return true;
     }
+
+    @Override
+    public boolean registerTeamForHackathon(Long teamId, Long hackathonId) {
+        return false;
+    }
+
+    @Override
+    public boolean unregisterTeamFromHackathon(Long teamId, Long hackathonId) {
+        return false;
+    }
+
+    @Override
+    public boolean isTeamRegisteredForHackathon(Long teamId, Long hackathonId) {
+        return false;
+    }
 }

@@ -68,4 +68,19 @@ public class UserTeamServiceImpl implements UserTeamService {
         }
         return true;
     }
+
+    @Override
+    public boolean isUserInTeam(Long userId, Long teamId) {
+        return false;
+    }
+
+    @Override
+    public boolean addUserToTeam(Long userId, Long teamId) {
+        return false;
+    }
+
+    @Override
+    public boolean removeUserFromTeam(Long userId, Long teamId) {
+        return false;
+    }
 }

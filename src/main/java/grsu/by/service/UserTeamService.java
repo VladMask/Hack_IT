@@ -12,4 +12,9 @@ public interface UserTeamService {
 
     boolean deleteById(Long id);
 
+    boolean isUserInTeam(Long userId, Long teamId);
+
+    boolean addUserToTeam(Long userId, Long teamId);
+
+    boolean removeUserFromTeam(Long userId, Long teamId);
 }

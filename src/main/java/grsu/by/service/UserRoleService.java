@@ -12,4 +12,9 @@ public interface UserRoleService {
 
     boolean deleteById(Long id);
 
+    boolean addRoleToUser(Long userId, Long roleId);
+
+    boolean removeRoleFromUser(Long userId, Long roleId);
+
+    boolean hasRole(Long userId, Long roleId);
 }

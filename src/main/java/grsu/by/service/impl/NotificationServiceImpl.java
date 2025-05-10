@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -87,5 +89,20 @@ public class NotificationServiceImpl implements NotificationService {
             throw ExceptionUtil.throwEntityDeletionException(Notification.class, id.toString());
         }
         return true;
+    }
+
+    @Override
+    public List<NotificationDto> findAll() {
+        return List.of();
+    }
+
+    @Override
+    public List<NotificationDto> findByUserId(Long userId) {
+        return List.of();
+    }
+
+    @Override
+    public List<NotificationDto> findByHackathonId(Long hackathonId) {
+        return List.of();
     }
 }

@@ -2,6 +2,10 @@ package grsu.by.service;
 
 import grsu.by.dto.hackathonDto.HackathonCreationDto;
 import grsu.by.dto.hackathonDto.HackathonFullDto;
+import grsu.by.dto.hackathonDto.HackathonShortDto;
+import grsu.by.dto.userDto.UserBaseDto;
+
+import java.util.List;
 
 public interface HackathonService {
 
@@ -19,4 +23,7 @@ public interface HackathonService {
 
     boolean finishHackathon(Long id);
 
+    List<HackathonShortDto> findAll();
+
+    List<UserBaseDto> getJudges(Long id);
 }

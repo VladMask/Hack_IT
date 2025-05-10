@@ -2,6 +2,7 @@ package grsu.by.service.impl;
 
 import grsu.by.dto.solutionDto.SolutionCreationDto;
 import grsu.by.dto.solutionDto.SolutionFullDto;
+import grsu.by.dto.solutionDto.SolutionShortDto;
 import grsu.by.entity.Hackathon;
 import grsu.by.entity.Solution;
 import grsu.by.entity.Team;
@@ -14,6 +15,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -80,5 +83,20 @@ public class SolutionServiceImpl implements SolutionService {
             throw ExceptionUtil.throwEntityDeletionException(Solution.class, id.toString());
         }
         return true;
+    }
+
+    @Override
+    public List<SolutionShortDto> findAll() {
+        return List.of();
+    }
+
+    @Override
+    public List<SolutionShortDto> findByTeamId(Long teamId) {
+        return List.of();
+    }
+
+    @Override
+    public List<SolutionShortDto> findByHackathonId(Long hackathonId) {
+        return List.of();
     }
 }

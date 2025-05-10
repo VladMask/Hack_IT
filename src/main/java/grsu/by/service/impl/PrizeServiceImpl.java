@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -71,5 +73,20 @@ public class PrizeServiceImpl implements PrizeService {
             throw ExceptionUtil.throwEntityDeletionException(Prize.class, id.toString());
         }
         return true;
+    }
+
+    @Override
+    public List<PrizeDto> findAll() {
+        return List.of();
+    }
+
+    @Override
+    public List<PrizeDto> findByHackathonId(Long hackathonId) {
+        return List.of();
+    }
+
+    @Override
+    public List<PrizeDto> findByTeamId(Long teamId) {
+        return List.of();
     }
 }

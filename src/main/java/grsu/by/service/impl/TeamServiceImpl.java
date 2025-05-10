@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -57,5 +59,20 @@ public class TeamServiceImpl implements TeamService {
             throw ExceptionUtil.throwEntityDeletionException(Team.class, id.toString());
         }
         return true;
+    }
+
+    @Override
+    public List<TeamFullDto> findAll() {
+        return List.of();
+    }
+
+    @Override
+    public TeamFullDto addMember(Long id, Long userId) {
+        return null;
+    }
+
+    @Override
+    public TeamFullDto removeMember(Long id, Long userId) {
+        return null;
     }
 }

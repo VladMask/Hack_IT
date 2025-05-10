@@ -2,6 +2,8 @@ package grsu.by.service.impl;
 
 import grsu.by.dto.hackathonDto.HackathonCreationDto;
 import grsu.by.dto.hackathonDto.HackathonFullDto;
+import grsu.by.dto.hackathonDto.HackathonShortDto;
+import grsu.by.dto.userDto.UserBaseDto;
 import grsu.by.entity.Hackathon;
 import grsu.by.entity.User;
 import grsu.by.repository.HackathonRepository;
@@ -14,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -146,5 +149,15 @@ public class HackathonServiceImpl implements HackathonService {
         hackathon.setEndDate(OffsetDateTime.now());
         hackathonRepository.save(hackathon);
         return true;
+    }
+
+    @Override
+    public List<HackathonShortDto> findAll() {
+        return List.of();
+    }
+
+    @Override
+    public List<UserBaseDto> getJudges(Long id) {
+        return List.of();
     }
 }

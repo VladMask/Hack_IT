@@ -12,4 +12,9 @@ public interface TeamHackathonService {
 
     boolean deleteById(Long id);
 
+    boolean registerTeamForHackathon(Long teamId, Long hackathonId);
+
+    boolean unregisterTeamFromHackathon(Long teamId, Long hackathonId);
+
+    boolean isTeamRegisteredForHackathon(Long teamId, Long hackathonId);
 }
