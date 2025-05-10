@@ -1,5 +1,6 @@
 package grsu.by.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -73,22 +74,22 @@ public class Hackathon implements Serializable {
     @Column(name = "results_announcement")
     private OffsetDateTime resultsAnnouncement;
 
-    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Feedback> feedbacks;
 
-    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<TeamHackathon> teamHackathons;
 
-    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Solution> solutions;
 
-    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Notification> notifications;
 
-    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Application> applications;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_hackathons",
             joinColumns = @JoinColumn(name = "user_role_id", referencedColumnName = "id"),

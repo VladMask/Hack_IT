@@ -1,5 +1,6 @@
 package grsu.by.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -26,12 +27,12 @@ public class Score {
     @EmbeddedId
     private ScoreId id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @MapsId("solutionId")
     @JoinColumn(name = "solution_id")
     private Solution solution;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @MapsId("judgeId")
     @JoinColumn(name = "judge_id")
     private User judge;

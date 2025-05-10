@@ -13,10 +13,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScoreDto {
-
+    @NotNull
     private Long solutionId;
+    @NotNull
     private Long judgeId;
-
     @NotNull
     private Integer value;
 }

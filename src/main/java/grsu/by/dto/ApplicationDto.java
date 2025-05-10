@@ -1,6 +1,5 @@
 package grsu.by.dto;
 
-import grsu.by.entity.Hackathon;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +17,7 @@ public class ApplicationDto {
 
     private Long id;
 
-    private Hackathon hackathon;
+    private Long hackathonId;
 
     private Long teamId;
 

@@ -69,7 +69,7 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<UserTeam> userTeams;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_hackathons",
             joinColumns = @JoinColumn(name = "user_role_id", referencedColumnName = "id"),
@@ -77,7 +77,7 @@ public class User {
     )
     private Set<Hackathon> hackathons;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_notifications",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -85,10 +85,10 @@ public class User {
     )
     private Set<Notification> notifications;
 
-    @OneToMany(mappedBy = "judge", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "judge", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Feedback> feedbacks;
 
-    @OneToMany(mappedBy = "judge", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "judge", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Score> scores;
 
 }

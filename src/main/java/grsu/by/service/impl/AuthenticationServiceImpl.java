@@ -41,7 +41,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final String DEFAULT_ROLE_NAME = "USER";
 
     @Override
-    @Transactional
     public AuthResponse authenticate(SignInRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
@@ -59,7 +58,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    @Transactional
     public AuthResponse register(SignUpRequest request) {
         User user = mapper.map(request.getUserCreationDto(), User.class);
         setDefaultRole(user);

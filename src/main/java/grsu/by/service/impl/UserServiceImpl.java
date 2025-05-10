@@ -2,19 +2,19 @@ package grsu.by.service.impl;
 
 import grsu.by.dto.userDto.UserBaseDto;
 import grsu.by.dto.userDto.UserCreationDto;
+import grsu.by.entity.Role;
 import grsu.by.entity.User;
-import grsu.by.exception.EntityDeletionException;
-import grsu.by.exception.EntityNotFoundException;
+import grsu.by.entity.UserRole;
+import grsu.by.repository.RoleRepository;
 import grsu.by.repository.UserRepository;
+import grsu.by.repository.UserRoleRepository;
 import grsu.by.service.UserService;
+import grsu.by.util.ExceptionUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-import java.time.Instant;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -22,6 +22,8 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final UserRoleRepository userRoleRepository;
     private final ModelMapper mapper;
 
     @Override
@@ -33,13 +35,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserBaseDto findById(Long id) {
         User user = userRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(
-                        Map.of(
-                                "class", User.class.getName(),
-                                "id", id.toString(),
-                                "date", Instant.now().toString()
-                        )
-                )
+                () -> ExceptionUtil.throwEntityNotFoundException(User.class, id.toString())
         );
         return mapper.map(user, UserBaseDto.class);
     }
@@ -47,13 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserBaseDto update(Long id, UserBaseDto newDto) {
         User user = userRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(
-                        Map.of(
-                                "class", User.class.getName(),
-                                "id", id.toString(),
-                                "date", Instant.now().toString()
-                        )
-                )
+                () -> ExceptionUtil.throwEntityNotFoundException(User.class, id.toString())
         );
         if (newDto.getUsername() != null) {
             user.setUsername(newDto.getUsername());
@@ -72,19 +62,31 @@ public class UserServiceImpl implements UserService {
     public boolean deleteById(Long id) {
         userRepository.deleteById(id);
         if (userRepository.existsById(id)) {
-            throw new EntityDeletionException(
-                    Map.of(
-                            "id", id.toString(),
-                            "class", User.class.getName(),
-                            "date", Instant.now().toString()
-                    )
-            );
+            throw ExceptionUtil.throwEntityDeletionException(User.class, id.toString());
         }
         return true;
     }
 
     @Override
     public boolean setUserRole(Long userId, String roleName) {
-        return false;
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> ExceptionUtil.throwEntityNotFoundException(User.class, userId.toString())
+        );
+        
+        Role role = roleRepository.findByName(roleName).orElseThrow(
+                () -> ExceptionUtil.throwEntityNotFoundException(Role.class, roleName)
+        );
+        
+        // Проверяем, есть ли уже такая роль у пользователя
+        if (user.getUserRoles().stream().anyMatch(ur -> ur.getRole().getName().equals(roleName))) {
+            return false;
+        }
+        
+        UserRole userRole = new UserRole();
+        userRole.setUser(user);
+        userRole.setRole(role);
+        userRoleRepository.save(userRole);
+        
+        return true;
     }
 }
