@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/teams")
@@ -26,7 +26,7 @@ public class TeamController {
     private final TeamService service;
 
     @GetMapping
-    public List<TeamFullDto> getAll() {
+    public Set<TeamFullDto> getAll() {
         return service.findAll();
     }
 
@@ -58,15 +58,5 @@ public class TeamController {
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An unexpected error has occurred");
         }
-    }
-
-    @PostMapping("/{id}/members/{userId}")
-    public TeamFullDto addMember(@PathVariable Long id, @PathVariable Long userId) {
-        return service.addMember(id, userId);
-    }
-
-    @DeleteMapping("/{id}/members/{userId}")
-    public TeamFullDto removeMember(@PathVariable Long id, @PathVariable Long userId) {
-        return service.removeMember(id, userId);
     }
 } 

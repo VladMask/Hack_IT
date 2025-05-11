@@ -14,7 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -92,17 +93,25 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<NotificationDto> findAll() {
-        return List.of();
+    public Set<NotificationDto> findAll() {
+        return notificationRepository.findAll().stream()
+                .map(notification -> mapper.map(notification, NotificationDto.class))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public List<NotificationDto> findByUserId(Long userId) {
-        return List.of();
+    public Set<NotificationDto> findByUserId(Long userId) {
+        Set<Notification> notifications = notificationRepository.findAllByUserId(userId);
+        return notifications.stream()
+                .map(notification -> mapper.map(notification, NotificationDto.class))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public List<NotificationDto> findByHackathonId(Long hackathonId) {
-        return List.of();
+    public Set<NotificationDto> findByHackathonId(Long hackathonId) {
+        Set<Notification> notifications = notificationRepository.findAllByHackathonId(hackathonId);
+        return notifications.stream()
+                .map(notification -> mapper.map(notification, NotificationDto.class))
+                .collect(Collectors.toSet());
     }
 }

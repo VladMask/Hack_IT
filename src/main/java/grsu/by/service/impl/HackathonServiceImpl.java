@@ -16,7 +16,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -152,12 +153,16 @@ public class HackathonServiceImpl implements HackathonService {
     }
 
     @Override
-    public List<HackathonShortDto> findAll() {
-        return List.of();
+    public Set<HackathonShortDto> findAll() {
+        return hackathonRepository.findAll().stream()
+                .map(h -> mapper.map(h, HackathonShortDto.class))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public List<UserBaseDto> getJudges(Long id) {
-        return List.of();
+    public Set<UserBaseDto> getJudges(Long id) {
+        return userRepository.findJudgesByHackathonId(id).stream()
+                .map(user -> mapper.map(user, UserBaseDto.class))
+                .collect(Collectors.toSet());
     }
 }

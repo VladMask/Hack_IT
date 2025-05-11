@@ -2,7 +2,7 @@ package grsu.by.service;
 
 import grsu.by.dto.ScoreDto;
 
-import java.util.List;
+import java.util.Set;
 
 public interface ScoreService {
 
@@ -14,9 +14,9 @@ public interface ScoreService {
 
     boolean deleteById(Long id);
 
-    List<ScoreDto> findAll();
+    Set<ScoreDto> findAll();
 
-    List<ScoreDto> findBySolutionId(Long solutionId);
+    Set<ScoreDto> findBySolutionId(Long solutionId);
 
-    List<ScoreDto> findByJudgeId(Long judgeId);
+    Set<ScoreDto> findByJudgeId(Long judgeId);
 }

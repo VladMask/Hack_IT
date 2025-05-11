@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/notifications")
@@ -25,7 +25,7 @@ public class NotificationController {
     private final NotificationService service;
 
     @GetMapping
-    public List<NotificationDto> getAll() {
+    public Set<NotificationDto> getAll() {
         return service.findAll();
     }
 
@@ -60,12 +60,12 @@ public class NotificationController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<NotificationDto> getByUser(@PathVariable Long userId) {
+    public Set<NotificationDto> getByUser(@PathVariable Long userId) {
         return service.findByUserId(userId);
     }
 
     @GetMapping("/hackathon/{hackathonId}")
-    public List<NotificationDto> getByHackathon(@PathVariable Long hackathonId) {
+    public Set<NotificationDto> getByHackathon(@PathVariable Long hackathonId) {
         return service.findByHackathonId(hackathonId);
     }
 

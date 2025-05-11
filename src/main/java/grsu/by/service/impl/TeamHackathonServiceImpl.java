@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -73,16 +75,38 @@ public class TeamHackathonServiceImpl implements TeamHackathonService {
 
     @Override
     public boolean registerTeamForHackathon(Long teamId, Long hackathonId) {
-        return false;
+        if (teamHackathonRepository.existsByTeamIdAndHackathonId(teamId, hackathonId)) {
+            return false;
+        }
+
+        Team team = teamRepository.findById(teamId).orElseThrow(
+                () -> ExceptionUtil.throwEntityNotFoundException(Team.class, teamId.toString())
+        );
+
+        Hackathon hackathon = hackathonRepository.findById(hackathonId).orElseThrow(
+                () -> ExceptionUtil.throwEntityNotFoundException(Hackathon.class, hackathonId.toString())
+        );
+
+        TeamHackathon teamHackathon = new TeamHackathon();
+        teamHackathon.setTeam(team);
+        teamHackathon.setHackathon(hackathon);
+
+        teamHackathonRepository.save(teamHackathon);
+        return true;
     }
 
     @Override
     public boolean unregisterTeamFromHackathon(Long teamId, Long hackathonId) {
+        Optional<TeamHackathon> record = teamHackathonRepository.findByTeamIdAndHackathonId(teamId, hackathonId);
+        if (record.isPresent()) {
+            teamHackathonRepository.delete(record.get());
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean isTeamRegisteredForHackathon(Long teamId, Long hackathonId) {
-        return false;
+        return teamHackathonRepository.existsByTeamIdAndHackathonId(teamId, hackathonId);
     }
 }

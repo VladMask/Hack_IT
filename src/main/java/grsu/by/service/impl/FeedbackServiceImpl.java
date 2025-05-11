@@ -17,7 +17,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -89,17 +90,23 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public List<FeedbackDto> findByJudgeId(Long judgeId) {
-        return List.of();
+    public Set<FeedbackDto> findByJudgeId(Long judgeId) {
+        return feedbackRepository.findAllByJudgeId(judgeId).stream()
+                .map(f -> mapper.map(f, FeedbackDto.class))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public List<FeedbackDto> findBySolutionId(Long solutionId) {
-        return List.of();
+    public Set<FeedbackDto> findBySolutionId(Long solutionId) {
+        return feedbackRepository.findAllBySolutionId(solutionId).stream()
+                .map(f -> mapper.map(f, FeedbackDto.class))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public List<FeedbackDto> findByHackathonId(Long hackathonId) {
-        return List.of();
+    public Set<FeedbackDto> findByHackathonId(Long hackathonId) {
+        return feedbackRepository.findAllByHackathonId(hackathonId).stream()
+                .map(f -> mapper.map(f, FeedbackDto.class))
+                .collect(Collectors.toSet());
     }
 }

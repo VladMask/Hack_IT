@@ -4,7 +4,7 @@ import grsu.by.dto.solutionDto.SolutionCreationDto;
 import grsu.by.dto.solutionDto.SolutionFullDto;
 import grsu.by.dto.solutionDto.SolutionShortDto;
 
-import java.util.List;
+import java.util.Set;
 
 public interface SolutionService {
 
@@ -16,9 +16,9 @@ public interface SolutionService {
 
     boolean deleteById(Long id);
 
-    List<SolutionShortDto> findAll();
+    Set<SolutionShortDto> findAll();
 
-    List<SolutionShortDto> findByTeamId(Long teamId);
+    Set<SolutionShortDto> findByTeamId(Long teamId);
 
-    List<SolutionShortDto> findByHackathonId(Long hackathonId);
+    Set<SolutionShortDto> findByHackathonId(Long hackathonId);
 }

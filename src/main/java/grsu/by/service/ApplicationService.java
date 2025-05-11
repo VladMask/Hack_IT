@@ -2,7 +2,7 @@ package grsu.by.service;
 
 import grsu.by.dto.ApplicationDto;
 
-import java.util.List;
+import java.util.Set;
 
 public interface ApplicationService {
 
@@ -14,7 +14,7 @@ public interface ApplicationService {
 
     boolean deleteById(Long id);
 
-    List<ApplicationDto> findByTeamId(Long teamId);
+    Set<ApplicationDto> findByTeamId(Long teamId);
 
-    List<ApplicationDto> findByHackathonId(Long hackathonId);
+    Set<ApplicationDto> findByHackathonId(Long hackathonId);
 }

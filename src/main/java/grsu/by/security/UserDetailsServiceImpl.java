@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import grsu.by.entity.User;
 import grsu.by.exception.EntityNotFoundException;
 import grsu.by.repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,5 +38,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .password(user.getCredentials().getPassword())
                 .userRoles(user.getUserRoles())
                 .build();
+    }
+
+    public Long getUserIdFromSecurityContext(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+        return userDetails.getId();
     }
 }

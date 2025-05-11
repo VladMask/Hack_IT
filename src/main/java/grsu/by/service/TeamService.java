@@ -3,7 +3,7 @@ package grsu.by.service;
 import grsu.by.dto.teamDto.TeamCreationDto;
 import grsu.by.dto.teamDto.TeamFullDto;
 
-import java.util.List;
+import java.util.Set;
 
 public interface TeamService {
 
@@ -15,9 +15,5 @@ public interface TeamService {
 
     boolean deleteById(Long id);
 
-    List<TeamFullDto> findAll();
-
-    TeamFullDto addMember(Long id, Long userId);
-
-    TeamFullDto removeMember(Long id, Long userId);
+    Set<TeamFullDto> findAll();
 }

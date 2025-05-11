@@ -2,7 +2,7 @@ package grsu.by.service;
 
 import grsu.by.dto.PrizeDto;
 
-import java.util.List;
+import java.util.Set;
 
 public interface PrizeService {
 
@@ -14,9 +14,9 @@ public interface PrizeService {
 
     boolean deleteById(Long id);
 
-    List<PrizeDto> findAll();
+    Set<PrizeDto> findAll();
 
-    List<PrizeDto> findByHackathonId(Long hackathonId);
+    Set<PrizeDto> findByHackathonId(Long hackathonId);
 
-    List<PrizeDto> findByTeamId(Long teamId);
+    Set<PrizeDto> findByTeamId(Long teamId);
 }

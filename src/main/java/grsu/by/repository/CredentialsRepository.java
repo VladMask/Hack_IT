@@ -1,9 +1,9 @@
 package grsu.by.repository;
 
 import grsu.by.entity.Credentials;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CredentialsRepository extends CrudRepository<Credentials, Long> {
+public interface CredentialsRepository extends JpaRepository<Credentials, Long> {
 }

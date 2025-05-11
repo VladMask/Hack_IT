@@ -16,7 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -86,17 +87,23 @@ public class SolutionServiceImpl implements SolutionService {
     }
 
     @Override
-    public List<SolutionShortDto> findAll() {
-        return List.of();
+    public Set<SolutionShortDto> findAll() {
+        return solutionRepository.findAll().stream()
+                .map(solution -> mapper.map(solution, SolutionShortDto.class))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public List<SolutionShortDto> findByTeamId(Long teamId) {
-        return List.of();
+    public Set<SolutionShortDto> findByTeamId(Long teamId) {
+        return solutionRepository.findByTeamId(teamId).stream()
+                .map(solution -> mapper.map(solution, SolutionShortDto.class))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public List<SolutionShortDto> findByHackathonId(Long hackathonId) {
-        return List.of();
+    public Set<SolutionShortDto> findByHackathonId(Long hackathonId) {
+        return solutionRepository.findByHackathonId(hackathonId).stream()
+                .map(solution -> mapper.map(solution, SolutionShortDto.class))
+                .collect(Collectors.toSet());
     }
 }

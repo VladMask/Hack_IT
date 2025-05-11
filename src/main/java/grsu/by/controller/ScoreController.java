@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/scores")
@@ -25,7 +25,7 @@ public class ScoreController {
     private final ScoreService service;
 
     @GetMapping
-    public List<ScoreDto> getAll() {
+    public Set<ScoreDto> getAll() {
         return service.findAll();
     }
 
@@ -60,12 +60,12 @@ public class ScoreController {
     }
 
     @GetMapping("/solution/{solutionId}")
-    public List<ScoreDto> getBySolution(@PathVariable Long solutionId) {
+    public Set<ScoreDto> getBySolution(@PathVariable Long solutionId) {
         return service.findBySolutionId(solutionId);
     }
 
     @GetMapping("/judge/{judgeId}")
-    public List<ScoreDto>getByJudge(@PathVariable Long judgeId) {
+    public Set<ScoreDto>getByJudge(@PathVariable Long judgeId) {
         return service.findByJudgeId(judgeId);
     }
 } 

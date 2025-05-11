@@ -3,7 +3,13 @@ package grsu.by.service.impl;
 import grsu.by.dto.teamDto.TeamCreationDto;
 import grsu.by.dto.teamDto.TeamFullDto;
 import grsu.by.entity.Team;
+import grsu.by.entity.User;
+import grsu.by.entity.UserTeam;
+import grsu.by.entity.UserTeamId;
 import grsu.by.repository.TeamRepository;
+import grsu.by.repository.UserRepository;
+import grsu.by.repository.UserTeamRepository;
+import grsu.by.security.UserDetailsServiceImpl;
 import grsu.by.service.TeamService;
 import grsu.by.util.ExceptionUtil;
 import jakarta.transaction.Transactional;
@@ -11,7 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -19,13 +26,31 @@ import java.util.List;
 public class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
+    private final UserTeamRepository userTeamRepository;
+    private final UserRepository userRepository;
+    private final UserDetailsServiceImpl userDetailsService;
     private final ModelMapper mapper;
 
     @Override
     public TeamCreationDto create(TeamCreationDto dto) {
         Team team = mapper.map(dto, Team.class);
-        team.setIsActive(true);
-        return mapper.map(teamRepository.save(team), TeamCreationDto.class);
+        Team savedTeam = teamRepository.save(team);
+        Long leaderId = userDetailsService.getUserIdFromSecurityContext();
+        User leader = userRepository.findById(leaderId).orElseThrow(
+                () -> ExceptionUtil.throwEntityNotFoundException(User.class, leaderId.toString())
+        );
+        UserTeamId userTeamId = UserTeamId.builder()
+                .teamId(savedTeam.getId())
+                .userId(leaderId)
+                .build();
+        UserTeam userTeam = UserTeam.builder()
+                .id(userTeamId)
+                .user(leader)
+                .team(team)
+                .isLeader(true)
+                .build();
+        userTeamRepository.save(userTeam);
+        return mapper.map(savedTeam, TeamCreationDto.class);
     }
 
     @Override
@@ -62,17 +87,9 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<TeamFullDto> findAll() {
-        return List.of();
-    }
-
-    @Override
-    public TeamFullDto addMember(Long id, Long userId) {
-        return null;
-    }
-
-    @Override
-    public TeamFullDto removeMember(Long id, Long userId) {
-        return null;
+    public Set<TeamFullDto> findAll() {
+        return teamRepository.findAll().stream()
+                .map(team -> mapper.map(team, TeamFullDto.class))
+                .collect(Collectors.toSet());
     }
 }

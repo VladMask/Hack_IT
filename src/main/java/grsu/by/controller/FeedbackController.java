@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/feedback")
@@ -55,17 +55,17 @@ public class FeedbackController {
     }
 
     @GetMapping("/judge/{judgeId}")
-    public List<FeedbackDto> getByJudge(@PathVariable Long judgeId) {
+    public Set<FeedbackDto> getByJudge(@PathVariable Long judgeId) {
         return service.findByJudgeId(judgeId);
     }
 
     @GetMapping("/solution/{solutionId}")
-    public List<FeedbackDto> getBySolution(@PathVariable Long solutionId) {
+    public Set<FeedbackDto> getBySolution(@PathVariable Long solutionId) {
         return service.findBySolutionId(solutionId);
     }
 
     @GetMapping("/hackathon/{hackathonId}")
-    public List<FeedbackDto> getByHackathon(@PathVariable Long hackathonId) {
+    public Set<FeedbackDto> getByHackathon(@PathVariable Long hackathonId) {
         return service.findByHackathonId(hackathonId);
     }
 } 
