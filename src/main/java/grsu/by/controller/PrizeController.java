@@ -2,6 +2,7 @@ package grsu.by.controller;
 
 import grsu.by.dto.PrizeDto;
 import grsu.by.service.PrizeService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/v1/prizes")
 @RequiredArgsConstructor
+@Tag(name = "PrizeController", description = "The Prize API")
 public class PrizeController {
 
     private final PrizeService service;

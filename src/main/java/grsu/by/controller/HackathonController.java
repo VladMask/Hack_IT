@@ -5,6 +5,7 @@ import grsu.by.dto.hackathonDto.HackathonFullDto;
 import grsu.by.dto.hackathonDto.HackathonShortDto;
 import grsu.by.dto.userDto.UserBaseDto;
 import grsu.by.service.HackathonService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/v1/hackathons")
 @RequiredArgsConstructor
+@Tag(name = "HackathonController", description = "The Hackathon API")
 public class HackathonController {
 
     private final HackathonService service;

@@ -4,6 +4,7 @@ import grsu.by.dto.solutionDto.SolutionCreationDto;
 import grsu.by.dto.solutionDto.SolutionFullDto;
 import grsu.by.dto.solutionDto.SolutionShortDto;
 import grsu.by.service.SolutionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/v1/solutions")
 @RequiredArgsConstructor
+@Tag(name = "SolutionController", description = "The Solution API")
 public class SolutionController {
 
     private final SolutionService service;

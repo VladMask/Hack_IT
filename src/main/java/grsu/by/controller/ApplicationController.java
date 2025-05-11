@@ -2,6 +2,7 @@ package grsu.by.controller;
 
 import grsu.by.dto.ApplicationDto;
 import grsu.by.service.ApplicationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/v1/applications")
 @RequiredArgsConstructor
+@Tag(name = "ApplicationController", description = "The Application API")
 public class ApplicationController {
 
     private final ApplicationService service;

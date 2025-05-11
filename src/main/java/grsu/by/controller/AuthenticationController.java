@@ -1,5 +1,6 @@
 package grsu.by.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import grsu.by.dto.authenticationDto.AuthResponse;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@Tag(name = "AuthenticationController", description = "The Authentication API")
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
 

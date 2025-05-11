@@ -2,6 +2,7 @@ package grsu.by.controller;
 
 import grsu.by.dto.ScoreDto;
 import grsu.by.service.ScoreService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/v1/scores")
 @RequiredArgsConstructor
+@Tag(name = "ScoreController", description = "The Score API")
 public class ScoreController {
 
     private final ScoreService service;

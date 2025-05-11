@@ -2,6 +2,7 @@ package grsu.by.controller;
 
 import grsu.by.entity.UserTeamId;
 import grsu.by.service.UserTeamService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/user-teams")
 @RequiredArgsConstructor
+@Tag(name = "UserTeamController", description = "The UserTeam API")
 public class UserTeamController {
 
     private final UserTeamService service;

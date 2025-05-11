@@ -2,6 +2,7 @@ package grsu.by.controller;
 
 import grsu.by.dto.NotificationDto;
 import grsu.by.service.NotificationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/v1/notifications")
 @RequiredArgsConstructor
+@Tag(name = "NotificationController", description = "The Notification API")
 public class NotificationController {
 
     private final NotificationService service;

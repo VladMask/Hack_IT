@@ -3,6 +3,7 @@ package grsu.by.controller;
 import grsu.by.dto.teamDto.TeamFullDto;
 import grsu.by.dto.teamDto.TeamCreationDto;
 import grsu.by.service.TeamService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/v1/teams")
 @RequiredArgsConstructor
+@Tag(name = "TeamController", description = "The Team API")
 public class TeamController {
 
     private final TeamService service;

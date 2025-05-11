@@ -2,6 +2,7 @@ package grsu.by.controller;
 
 import grsu.by.dto.FeedbackDto;
 import grsu.by.service.FeedbackService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/v1/feedback")
 @RequiredArgsConstructor
+@Tag(name = "FeedbackController", description = "The Feedback API")
 public class FeedbackController {
 
     private final FeedbackService service;

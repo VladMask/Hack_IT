@@ -3,6 +3,7 @@ package grsu.by.controller;
 import grsu.by.dto.userDto.UserBaseDto;
 import grsu.by.dto.userDto.UserCreationDto;
 import grsu.by.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
+@Tag(name = "UserController", description = "The User API")
 public class UserController {
 
     private final UserService service;
