@@ -73,4 +73,68 @@
         <sqlFile encoding="utf8" path="./sql/17.insert-data-into-roles-table.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
+    <changeSet id="20.fill-hackathons" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/20.fill-hackathons-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="21.fill-users" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/21.fill-users-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="22.fill-credentials" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/22.fill-credentials-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="23.fill-teams" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/23.fill-teams-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="24.fill-team_hackathons" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/24.fill-team_hackathons-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="25.fill-user_roles" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/25.fill-user_roles-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="26.fill-user_hackathons" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/26.fill-user_hackathons-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="27.fill-solutions" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/27.fill-solutions-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="28.fill-feedbacks" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/28.fill-feedbacks-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="29.fill-notifications" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/29.fill-notifications-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="30.fill-user_teams" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/30.fill-user_teams-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="31.fill-applications" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/31.fill-applications-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="32.fill-user_notifications" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/32.fill-user_notifications-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="33.fill-scores" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/33.fill-scores-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="34.altered-prizes-nn-constraint" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/34.altered-prizes-nn-constraint.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="35.fill-prizes" author="Vladislav Maskevich">
+        <sqlFile encoding="utf8" path="./sql/35.fill-prizes-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
 </databaseChangeLog>
