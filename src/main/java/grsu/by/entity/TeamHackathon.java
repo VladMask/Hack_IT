@@ -41,5 +41,5 @@ public class TeamHackathon {
     private Boolean isWinner = false;
 
     @Column(name = "place")
-    private Integer place;
+    private Integer place = -1;
 }

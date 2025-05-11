@@ -15,7 +15,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -87,13 +88,19 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public List<ApplicationDto> findByTeamId(Long teamId) {
-        return List.of();
+    public Set<ApplicationDto> findByTeamId(Long teamId) {
+        Set<Application> applications = applicationRepository.findAllByTeamId(teamId);
+        return applications.stream()
+                .map(app -> mapper.map(app, ApplicationDto.class))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public List<ApplicationDto> findByHackathonId(Long hackathonId) {
-        return List.of();
+    public Set<ApplicationDto> findByHackathonId(Long hackathonId) {
+        Set<Application> applications = applicationRepository.findAllByHackathonId(hackathonId);
+        return applications.stream()
+                .map(app -> mapper.map(app, ApplicationDto.class))
+                .collect(Collectors.toSet());
     }
 }
 

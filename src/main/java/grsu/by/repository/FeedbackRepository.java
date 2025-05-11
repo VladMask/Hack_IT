@@ -1,10 +1,14 @@
 package grsu.by.repository;
 
 import grsu.by.entity.Feedback;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface FeedbackRepository extends CrudRepository<Feedback, Long> {
+import java.util.Set;
 
+@Repository
+public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
+    Set<Feedback> findAllByJudgeId(Long judgeId);
+    Set<Feedback> findAllBySolutionId(Long solutionId);
+    Set<Feedback> findAllByHackathonId(Long hackathonId);
 }

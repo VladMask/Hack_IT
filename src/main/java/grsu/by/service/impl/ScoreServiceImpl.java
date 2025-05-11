@@ -15,7 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -72,17 +73,23 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public List<ScoreDto> findAll() {
-        return List.of();
+    public Set<ScoreDto> findAll() {
+        return scoreRepository.findAll().stream()
+                .map(score -> mapper.map(score, ScoreDto.class))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public List<ScoreDto> findBySolutionId(Long solutionId) {
-        return List.of();
+    public Set<ScoreDto> findBySolutionId(Long solutionId) {
+        return scoreRepository.findBySolutionId(solutionId).stream()
+                .map(score -> mapper.map(score, ScoreDto.class))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public List<ScoreDto> findByJudgeId(Long judgeId) {
-        return List.of();
+    public Set<ScoreDto> findByJudgeId(Long judgeId) {
+        return scoreRepository.findByJudgeId(judgeId).stream()
+                .map(score -> mapper.map(score, ScoreDto.class))
+                .collect(Collectors.toSet());
     }
 }

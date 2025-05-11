@@ -4,6 +4,7 @@ import grsu.by.dto.UserRoleDto;
 import grsu.by.entity.Role;
 import grsu.by.entity.User;
 import grsu.by.entity.UserRole;
+import grsu.by.exception.EntityNotFoundException;
 import grsu.by.repository.RoleRepository;
 import grsu.by.repository.UserRepository;
 import grsu.by.repository.UserRoleRepository;
@@ -13,6 +14,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -78,17 +82,41 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public boolean addRoleToUser(Long userId, Long roleId) {
+    public boolean addRoleToUser(Long userId, String roleName) {
+        if (userRoleRepository.existsByUserIdAndRoleName(userId, roleName)) {
+            return false;
+        }
+
+        UserRole userRole = new UserRole();
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> ExceptionUtil.throwEntityNotFoundException(User.class, userId.toString())
+        );
+        Role role = roleRepository.findByName(roleName).orElseThrow(
+                () -> new EntityNotFoundException(
+                        Map.of(
+                                "class", Role.class.getName(),
+                                "name", roleName,
+                                "date", Instant.now().toString()
+                        )
+                )
+        );
+        userRole.setUser(user);
+        userRole.setRole(role);
+        userRole = userRoleRepository.save(userRole);
+        return userRoleRepository.existsById(userRole.getId());
+    }
+
+    @Override
+    public boolean removeRoleFromUser(Long userId, String roleName) {
+        if (userRoleRepository.existsByUserIdAndRoleName(userId, roleName)) {
+            userRoleRepository.deleteByUserIdAndRoleName(userId, roleName);
+            return true;
+        }
         return false;
     }
 
     @Override
-    public boolean removeRoleFromUser(Long userId, Long roleId) {
-        return false;
-    }
-
-    @Override
-    public boolean hasRole(Long userId, Long roleId) {
-        return false;
+    public boolean hasRole(Long userId, String roleName) {
+        return userRoleRepository.existsByUserIdAndRoleName(userId, roleName);
     }
 }

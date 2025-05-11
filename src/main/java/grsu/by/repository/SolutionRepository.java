@@ -1,10 +1,13 @@
 package grsu.by.repository;
 
 import grsu.by.entity.Solution;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface SolutionRepository extends CrudRepository<Solution, Long> {
+import java.util.Set;
 
+@Repository
+public interface SolutionRepository extends JpaRepository<Solution, Long> {
+    Set<Solution> findByTeamId(Long teamId);
+    Set<Solution> findByHackathonId(Long hackathonId);
 }

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/solutions")
@@ -27,7 +27,7 @@ public class SolutionController {
     private final SolutionService service;
 
     @GetMapping
-    public List<SolutionShortDto> getAll() {
+    public Set<SolutionShortDto> getAll() {
         return service.findAll();
     }
 
@@ -62,12 +62,12 @@ public class SolutionController {
     }
 
     @GetMapping("/team/{teamId}")
-    public List<SolutionShortDto> getByTeam(@PathVariable Long teamId) {
+    public Set<SolutionShortDto> getByTeam(@PathVariable Long teamId) {
         return service.findByTeamId(teamId);
     }
 
     @GetMapping("/hackathon/{hackathonId}")
-    public List<SolutionShortDto> getByHackathon(@PathVariable Long hackathonId) {
+    public Set<SolutionShortDto> getByHackathon(@PathVariable Long hackathonId) {
         return service.findByHackathonId(hackathonId);
     }
 } 

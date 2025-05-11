@@ -1,20 +1,17 @@
 package grsu.by.service;
 
 import grsu.by.dto.UserTeamDto;
+import grsu.by.entity.UserTeamId;
 
 public interface UserTeamService {
 
-    UserTeamDto create(UserTeamDto dto);
+    UserTeamDto findById(UserTeamId id);
 
-    UserTeamDto findById(Long id);
+    UserTeamDto update(UserTeamId id, UserTeamDto newDto);
 
-    UserTeamDto update(Long id, UserTeamDto newDto);
+    boolean isUserInTeam(UserTeamId id);
 
-    boolean deleteById(Long id);
+    boolean addUserToTeam(UserTeamId id);
 
-    boolean isUserInTeam(Long userId, Long teamId);
-
-    boolean addUserToTeam(Long userId, Long teamId);
-
-    boolean removeUserFromTeam(Long userId, Long teamId);
+    boolean removeUserFromTeam(UserTeamId id);
 }

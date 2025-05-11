@@ -26,30 +26,16 @@ public class UserTeamServiceImpl implements UserTeamService {
     private final ModelMapper mapper;
 
     @Override
-    public UserTeamDto create(UserTeamDto dto) {
-        UserTeam userTeam = mapper.map(dto, UserTeam.class);
-        Team team = teamRepository.findById(dto.getTeamId()).orElseThrow(
-                () -> ExceptionUtil.throwEntityNotFoundException(Team.class, dto.getTeamId().toString())
-        );
-        userTeam.setTeam(team);
-        User user = userRepository.findById(dto.getUserId()).orElseThrow(
-                () -> ExceptionUtil.throwEntityNotFoundException(User.class, dto.getUserId().toString())
-        );
-        userTeam.setUser(user);
-        return mapper.map(userTeamRepository.save(userTeam), UserTeamDto.class);
-    }
-
-    @Override
-    public UserTeamDto findById(Long id) {
-        UserTeam userTeam = userTeamRepository.findById(new UserTeamId(id, id)).orElseThrow(
+    public UserTeamDto findById(UserTeamId id) {
+        UserTeam userTeam = userTeamRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(UserTeam.class, id.toString())
         );
         return mapper.map(userTeam, UserTeamDto.class);
     }
 
     @Override
-    public UserTeamDto update(Long id, UserTeamDto newDto) {
-        UserTeam userTeam = userTeamRepository.findById(new UserTeamId(id, id)).orElseThrow(
+    public UserTeamDto update(UserTeamId id, UserTeamDto newDto) {
+        UserTeam userTeam = userTeamRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(UserTeam.class, id.toString())
         );
         
@@ -61,26 +47,32 @@ public class UserTeamServiceImpl implements UserTeamService {
     }
 
     @Override
-    public boolean deleteById(Long id) {
-        userTeamRepository.deleteById(new UserTeamId(id, id));
-        if (userTeamRepository.existsById(new UserTeamId(id, id))) {
+    public boolean isUserInTeam(UserTeamId id) {
+        return userTeamRepository.existsById(id);
+    }
+
+    @Override
+    public boolean addUserToTeam(UserTeamId id) {
+        UserTeam userTeam = new UserTeam();
+        Team team = teamRepository.findById(id.getTeamId()).orElseThrow(
+                () -> ExceptionUtil.throwEntityNotFoundException(Team.class, id.getTeamId().toString())
+        );
+        userTeam.setTeam(team);
+        User user = userRepository.findById(id.getUserId()).orElseThrow(
+                () -> ExceptionUtil.throwEntityNotFoundException(User.class, id.getUserId().toString())
+        );
+        userTeam.setUser(user);
+        userTeam.setId(id);
+        userTeamRepository.save(userTeam);
+        return userTeamRepository.existsById(id);
+    }
+
+    @Override
+    public boolean removeUserFromTeam(UserTeamId id) {
+        userTeamRepository.deleteById(id);
+        if (userTeamRepository.existsById(id)) {
             throw ExceptionUtil.throwEntityDeletionException(UserTeam.class, id.toString());
         }
         return true;
-    }
-
-    @Override
-    public boolean isUserInTeam(Long userId, Long teamId) {
-        return false;
-    }
-
-    @Override
-    public boolean addUserToTeam(Long userId, Long teamId) {
-        return false;
-    }
-
-    @Override
-    public boolean removeUserFromTeam(Long userId, Long teamId) {
-        return false;
     }
 }

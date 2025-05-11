@@ -2,7 +2,7 @@ package grsu.by.service;
 
 import grsu.by.dto.FeedbackDto;
 
-import java.util.List;
+import java.util.Set;
 
 public interface FeedbackService {
 
@@ -14,9 +14,9 @@ public interface FeedbackService {
 
     boolean deleteById(Long id);
 
-    List<FeedbackDto> findByJudgeId(Long judgeId);
+    Set<FeedbackDto> findByJudgeId(Long judgeId);
 
-    List<FeedbackDto> findBySolutionId(Long solutionId);
+    Set<FeedbackDto> findBySolutionId(Long solutionId);
 
-    List<FeedbackDto> findByHackathonId(Long hackathonId);
+    Set<FeedbackDto> findByHackathonId(Long hackathonId);
 }

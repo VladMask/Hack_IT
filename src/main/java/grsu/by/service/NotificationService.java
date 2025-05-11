@@ -2,7 +2,7 @@ package grsu.by.service;
 
 import grsu.by.dto.NotificationDto;
 
-import java.util.List;
+import java.util.Set;
 
 public interface NotificationService {
 
@@ -14,9 +14,9 @@ public interface NotificationService {
 
     boolean deleteById(Long id);
 
-    List<NotificationDto> findAll();
+    Set<NotificationDto> findAll();
 
-    List<NotificationDto> findByUserId(Long userId);
+    Set<NotificationDto> findByUserId(Long userId);
 
-    List<NotificationDto> findByHackathonId(Long hackathonId);
+    Set<NotificationDto> findByHackathonId(Long hackathonId);
 }

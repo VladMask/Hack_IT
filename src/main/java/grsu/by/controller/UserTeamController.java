@@ -1,5 +1,6 @@
 package grsu.by.controller;
 
+import grsu.by.entity.UserTeamId;
 import grsu.by.service.UserTeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class UserTeamController {
 
     @PostMapping("/{userId}/teams/{teamId}")
     public ResponseEntity<String> addUserToTeam(@PathVariable Long userId, @PathVariable Long teamId) {
-        if (service.addUserToTeam(userId, teamId)) {
+        if (service.addUserToTeam(new UserTeamId(userId, teamId))) {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("User added to team successfully");
@@ -35,7 +36,7 @@ public class UserTeamController {
 
     @DeleteMapping("/{userId}/teams/{teamId}")
     public ResponseEntity<String> removeUserFromTeam(@PathVariable Long userId, @PathVariable Long teamId) {
-        if (service.removeUserFromTeam(userId, teamId)) {
+        if (service.removeUserFromTeam(new UserTeamId(userId, teamId))) {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("User removed from team successfully");
@@ -49,7 +50,7 @@ public class UserTeamController {
 
     @GetMapping("/{userId}/teams")
     public ResponseEntity<String> isUserInTeam(@PathVariable Long userId, @RequestParam Long teamId) {
-        if (service.isUserInTeam(userId, teamId)) {
+        if (service.isUserInTeam(new UserTeamId(userId, teamId))) {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("User is a team participant");

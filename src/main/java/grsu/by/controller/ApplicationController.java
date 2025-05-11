@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/applications")
@@ -55,12 +55,12 @@ public class ApplicationController {
     }
 
     @GetMapping("/team/{teamId}")
-    public List<ApplicationDto> getByTeam(@PathVariable Long teamId) {
+    public Set<ApplicationDto> getByTeam(@PathVariable Long teamId) {
         return service.findByTeamId(teamId);
     }
 
     @GetMapping("/hackathon/{hackathonId}")
-    public List<ApplicationDto> getByHackathon(@PathVariable Long hackathonId) {
+    public Set<ApplicationDto> getByHackathon(@PathVariable Long hackathonId) {
         return service.findByHackathonId(hackathonId);
     }
 } 

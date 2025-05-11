@@ -71,7 +71,7 @@ public class Hackathon implements Serializable {
     @Column(name = "assessment_end")
     private OffsetDateTime assessmentEnd;
 
-    @Column(name = "results_announcement")
+    @Column(name = "result_announcement")
     private OffsetDateTime resultsAnnouncement;
 
     @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

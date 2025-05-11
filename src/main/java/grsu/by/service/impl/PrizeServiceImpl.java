@@ -14,7 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -76,17 +77,23 @@ public class PrizeServiceImpl implements PrizeService {
     }
 
     @Override
-    public List<PrizeDto> findAll() {
-        return List.of();
+    public Set<PrizeDto> findAll() {
+        return prizeRepository.findAll().stream()
+                .map(prize -> mapper.map(prize, PrizeDto.class))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public List<PrizeDto> findByHackathonId(Long hackathonId) {
-        return List.of();
+    public Set<PrizeDto> findByHackathonId(Long hackathonId) {
+        return prizeRepository.findByHackathonId(hackathonId).stream()
+                .map(prize -> mapper.map(prize, PrizeDto.class))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public List<PrizeDto> findByTeamId(Long teamId) {
-        return List.of();
+    public Set<PrizeDto> findByTeamId(Long teamId) {
+        return prizeRepository.findByTeamId(teamId).stream()
+                .map(prize -> mapper.map(prize, PrizeDto.class))
+                .collect(Collectors.toSet());
     }
 }

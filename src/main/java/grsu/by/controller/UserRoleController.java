@@ -19,9 +19,9 @@ public class UserRoleController {
 
     private final UserRoleService service;
 
-    @PostMapping("/{userId}/roles/{roleId}")
-    public ResponseEntity<String> addRoleToUser(@PathVariable Long userId, @PathVariable Long roleId) {
-        if (service.addRoleToUser(userId, roleId)) {
+    @PostMapping("/{userId}/roles")
+    public ResponseEntity<String> addRoleToUser(@PathVariable Long userId, @RequestParam String roleName) {
+        if (service.addRoleToUser(userId, roleName)) {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("Role added successfully");
@@ -33,9 +33,9 @@ public class UserRoleController {
         }
     }
 
-    @DeleteMapping("/{userId}/roles/{roleId}")
-    public ResponseEntity<String> removeRoleFromUser(@PathVariable Long userId, @PathVariable Long roleId) {
-        if (service.removeRoleFromUser(userId, roleId)) {
+    @DeleteMapping("/{userId}/roles")
+    public ResponseEntity<String> removeRoleFromUser(@PathVariable Long userId, @RequestParam String roleName) {
+        if (service.removeRoleFromUser(userId, roleName)) {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("Role removed successfully");
@@ -48,8 +48,8 @@ public class UserRoleController {
     }
 
     @GetMapping("/{userId}/roles")
-    public ResponseEntity<String> hasRole(@PathVariable Long userId, @RequestParam Long roleId) {
-        if (service.hasRole(userId, roleId)) {
+    public ResponseEntity<String> hasRole(@PathVariable Long userId, @RequestParam String roleName) {
+        if (service.hasRole(userId, roleName)) {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("User has specified role");
