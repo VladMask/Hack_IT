@@ -1,22 +1,23 @@
 package grsu.by.service;
 
-import grsu.by.dto.FeedbackDto;
+import grsu.by.dto.feedbackDto.FeedbackCreationDto;
+import grsu.by.dto.feedbackDto.FeedbackFullDto;
 
 import java.util.Set;
 
 public interface FeedbackService {
 
-    FeedbackDto create(FeedbackDto dto);
+    FeedbackCreationDto create(FeedbackCreationDto dto);
 
-    FeedbackDto findById(Long id);
+    FeedbackFullDto findById(Long id);
 
-    FeedbackDto update(Long id, FeedbackDto newDto);
+    FeedbackFullDto update(Long id, FeedbackFullDto newDto);
 
     boolean deleteById(Long id);
 
-    Set<FeedbackDto> findByJudgeId(Long judgeId);
+    Set<FeedbackFullDto> findByJudgeId(Long judgeId);
 
-    Set<FeedbackDto> findBySolutionId(Long solutionId);
+    Set<FeedbackFullDto> findBySolutionId(Long solutionId);
 
-    Set<FeedbackDto> findByHackathonId(Long hackathonId);
+    Set<FeedbackFullDto> findByHackathonId(Long hackathonId);
 }

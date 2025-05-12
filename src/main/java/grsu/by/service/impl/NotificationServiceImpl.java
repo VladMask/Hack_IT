@@ -1,6 +1,7 @@
 package grsu.by.service.impl;
 
-import grsu.by.dto.NotificationDto;
+import grsu.by.dto.notificationDto.NotificationCreationDto;
+import grsu.by.dto.notificationDto.NotificationFullDto;
 import grsu.by.entity.Hackathon;
 import grsu.by.entity.Notification;
 import grsu.by.entity.User;
@@ -28,7 +29,7 @@ public class NotificationServiceImpl implements NotificationService {
     private final ModelMapper mapper;
 
     @Override
-    public NotificationDto create(NotificationDto dto) {
+    public NotificationCreationDto create(NotificationCreationDto dto) {
         Notification notification = new Notification();
         notification.setTitle(dto.getTitle());
         notification.setContent(dto.getContent());
@@ -44,19 +45,19 @@ public class NotificationServiceImpl implements NotificationService {
         notification.setHackathon(hackathon);
 
 
-        return mapper.map(notificationRepository.save(notification), NotificationDto.class);
+        return mapper.map(notificationRepository.save(notification), NotificationCreationDto.class);
     }
 
     @Override
-    public NotificationDto findById(Long id) {
+    public NotificationFullDto findById(Long id) {
         Notification notification = notificationRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Notification.class, id.toString())
         );
-        return mapper.map(notification, NotificationDto.class);
+        return mapper.map(notification, NotificationFullDto.class);
     }
 
     @Override
-    public NotificationDto update(Long id, NotificationDto newDto) {
+    public NotificationFullDto update(Long id, NotificationFullDto newDto) {
         Notification notification = notificationRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Notification.class, id.toString())
         );
@@ -67,20 +68,8 @@ public class NotificationServiceImpl implements NotificationService {
         if (newDto.getContent() != null) {
             notification.setContent(newDto.getContent());
         }
-        if (newDto.getUserId() != null) {
-            User user = userRepository.findById(newDto.getUserId()).orElseThrow(
-                    () -> ExceptionUtil.throwEntityNotFoundException(User.class, newDto.getUserId().toString())
-            );
-            notification.setUser(user);
-        }
-        if (newDto.getHackathonId() != null) {
-            Hackathon hackathon = hackathonRepository.findById(newDto.getHackathonId()).orElseThrow(
-                    () -> ExceptionUtil.throwEntityNotFoundException(Hackathon.class, newDto.getHackathonId().toString())
-            );
-            notification.setHackathon(hackathon);
-        }
 
-        return mapper.map(notificationRepository.save(notification), NotificationDto.class);
+        return mapper.map(notificationRepository.save(notification), NotificationFullDto.class);
     }
 
     @Override
@@ -93,25 +82,25 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public Set<NotificationDto> findAll() {
+    public Set<NotificationFullDto> findAll() {
         return notificationRepository.findAll().stream()
-                .map(notification -> mapper.map(notification, NotificationDto.class))
+                .map(notification -> mapper.map(notification, NotificationFullDto.class))
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Set<NotificationDto> findByUserId(Long userId) {
+    public Set<NotificationFullDto> findByUserId(Long userId) {
         Set<Notification> notifications = notificationRepository.findAllByUserId(userId);
         return notifications.stream()
-                .map(notification -> mapper.map(notification, NotificationDto.class))
+                .map(notification -> mapper.map(notification, NotificationFullDto.class))
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Set<NotificationDto> findByHackathonId(Long hackathonId) {
+    public Set<NotificationFullDto> findByHackathonId(Long hackathonId) {
         Set<Notification> notifications = notificationRepository.findAllByHackathonId(hackathonId);
         return notifications.stream()
-                .map(notification -> mapper.map(notification, NotificationDto.class))
+                .map(notification -> mapper.map(notification, NotificationFullDto.class))
                 .collect(Collectors.toSet());
     }
 }

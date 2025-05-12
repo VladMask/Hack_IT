@@ -2,8 +2,6 @@ package grsu.by.dto.applicationDto;
 
 import grsu.by.dto.hackathonDto.HackathonShortDto;
 import grsu.by.dto.teamDto.TeamCreationDto;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

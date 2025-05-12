@@ -1,6 +1,7 @@
 package grsu.by.controller;
 
-import grsu.by.dto.PrizeDto;
+import grsu.by.dto.prizeDto.PrizeCreationDto;
+import grsu.by.dto.prizeDto.PrizeFullDto;
 import grsu.by.service.PrizeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,28 +32,28 @@ public class PrizeController {
     @Operation(summary = "Get all prizes", description = "Returns a list of all prizes")
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Set<PrizeDto> getAll() {
+    public Set<PrizeFullDto> getAll() {
         return service.findAll();
     }
 
     @Operation(summary = "Get prize by ID", description = "Returns a single prize by its ID")
     @GetMapping("/{id}")
-    public PrizeDto getById(@PathVariable Long id) {
+    public PrizeFullDto getById(@PathVariable Long id) {
         return service.findById(id);
     }
 
     @Operation(summary = "Create prize", description = "Creates and returns a new prize")
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
-    public PrizeDto create(@RequestBody PrizeDto prizeDto) {
-        return service.create(prizeDto);
+    public PrizeCreationDto create(@RequestBody PrizeCreationDto prizeCreationDto) {
+        return service.create(prizeCreationDto);
     }
 
     @Operation(summary = "Update prize", description = "Updates and returns the prize")
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
-    public PrizeDto update(@PathVariable Long id, @RequestBody PrizeDto prizeDto) {
-        return service.update(id, prizeDto);
+    public PrizeFullDto update(@PathVariable Long id, @RequestBody PrizeFullDto prizeFullDto) {
+        return service.update(id, prizeFullDto);
     }
 
     @Operation(summary = "Delete prize by ID", description = "Deletes the prize and returns a status message")
@@ -74,14 +75,14 @@ public class PrizeController {
     @Operation(summary = "Get prizes by hackathon ID", description = "Returns all prizes for the specified hackathon")
     @GetMapping("/hackathon/{hackathonId}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
-    public Set<PrizeDto> getByHackathonId(@PathVariable Long hackathonId) {
+    public Set<PrizeFullDto> getByHackathonId(@PathVariable Long hackathonId) {
         return service.findByHackathonId(hackathonId);
     }
 
     @Operation(summary = "Get prizes by team ID", description = "Returns all prizes for the specified team")
     @GetMapping("/team/{teamId}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
-    public Set<PrizeDto> getByTeamId(@PathVariable Long teamId) {
+    public Set<PrizeFullDto> getByTeamId(@PathVariable Long teamId) {
         return service.findByTeamId(teamId);
     }
 }

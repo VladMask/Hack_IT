@@ -69,18 +69,6 @@ public class TeamController {
         }
     }
 
-    @Operation(summary = "Unregister a team from a hackathon", description = "Removes a team's registration from a hackathon")
-    @DeleteMapping("/{teamId}/hackathons/{hackathonId}")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
-    public ResponseEntity<String> unregisterTeamFromHackathon(@PathVariable Long teamId, @PathVariable Long hackathonId) {
-        if (service.unregisterTeamFromHackathon(teamId, hackathonId)) {
-            return ResponseEntity.ok("Team unregistered successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An unexpected error has occurred");
-        }
-    }
-
     @Operation(summary = "Check team registration", description = "Checks if a team is registered for a specific hackathon")
     @GetMapping("/{teamId}/hackathons/{hackathonId}")
     public ResponseEntity<String> isTeamRegisteredForHackathon(@PathVariable Long teamId, @PathVariable Long hackathonId) {

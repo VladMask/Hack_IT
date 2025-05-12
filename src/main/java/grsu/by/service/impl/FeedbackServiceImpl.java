@@ -1,6 +1,7 @@
 package grsu.by.service.impl;
 
-import grsu.by.dto.FeedbackDto;
+import grsu.by.dto.feedbackDto.FeedbackCreationDto;
+import grsu.by.dto.feedbackDto.FeedbackFullDto;
 import grsu.by.entity.Feedback;
 import grsu.by.entity.Hackathon;
 import grsu.by.entity.Solution;
@@ -32,7 +33,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     private final ModelMapper mapper;
 
     @Override
-    public FeedbackDto create(FeedbackDto dto) {
+    public FeedbackCreationDto create(FeedbackCreationDto dto) {
         User judge = userRepository.findById(dto.getJudgeId()).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(User.class, dto.getJudgeId().toString())
         );
@@ -56,19 +57,19 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedback.setSolution(solution);
         feedback.setHackathon(hackathon);
 
-        return mapper.map(feedbackRepository.save(feedback), FeedbackDto.class);
+        return mapper.map(feedbackRepository.save(feedback), FeedbackCreationDto.class);
     }
 
     @Override
-    public FeedbackDto findById(Long id) {
+    public FeedbackFullDto findById(Long id) {
         Feedback feedback = feedbackRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Feedback.class, id.toString())
         );
-        return mapper.map(feedback, FeedbackDto.class);
+        return mapper.map(feedback, FeedbackFullDto.class);
     }
 
     @Override
-    public FeedbackDto update(Long id, FeedbackDto newDto) {
+    public FeedbackFullDto update(Long id, FeedbackFullDto newDto) {
         Feedback feedback = feedbackRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Feedback.class, id.toString())
         );
@@ -77,7 +78,7 @@ public class FeedbackServiceImpl implements FeedbackService {
             feedback.setContent(newDto.getContent());
         }
 
-        return mapper.map(feedbackRepository.save(feedback), FeedbackDto.class);
+        return mapper.map(feedbackRepository.save(feedback), FeedbackFullDto.class);
     }
 
     @Override
@@ -90,23 +91,23 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public Set<FeedbackDto> findByJudgeId(Long judgeId) {
+    public Set<FeedbackFullDto> findByJudgeId(Long judgeId) {
         return feedbackRepository.findAllByJudgeId(judgeId).stream()
-                .map(f -> mapper.map(f, FeedbackDto.class))
+                .map(f -> mapper.map(f, FeedbackFullDto.class))
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Set<FeedbackDto> findBySolutionId(Long solutionId) {
+    public Set<FeedbackFullDto> findBySolutionId(Long solutionId) {
         return feedbackRepository.findAllBySolutionId(solutionId).stream()
-                .map(f -> mapper.map(f, FeedbackDto.class))
+                .map(f -> mapper.map(f, FeedbackFullDto.class))
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Set<FeedbackDto> findByHackathonId(Long hackathonId) {
+    public Set<FeedbackFullDto> findByHackathonId(Long hackathonId) {
         return feedbackRepository.findAllByHackathonId(hackathonId).stream()
-                .map(f -> mapper.map(f, FeedbackDto.class))
+                .map(f -> mapper.map(f, FeedbackFullDto.class))
                 .collect(Collectors.toSet());
     }
 }

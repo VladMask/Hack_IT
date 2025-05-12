@@ -1,6 +1,7 @@
 package grsu.by.controller;
 
-import grsu.by.dto.ScoreDto;
+import grsu.by.dto.scoreDto.ScoreCreationDto;
+import grsu.by.dto.scoreDto.ScoreFullDto;
 import grsu.by.entity.ScoreId;
 import grsu.by.service.ScoreService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,28 +33,28 @@ public class ScoreController {
     @Operation(summary = "Get all scores", description = "Returns a list of all scores")
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Set<ScoreDto> getAll() {
+    public Set<ScoreFullDto> getAll() {
         return service.findAll();
     }
 
     @Operation(summary = "Get score by solutionId and judgeId", description = "Returns a single score by its ID")
     @GetMapping("/{solutionId}/{judgeId}")
-    public ScoreDto getById(@PathVariable Long solutionId, @PathVariable Long judgeId) {
+    public ScoreFullDto getById(@PathVariable Long solutionId, @PathVariable Long judgeId) {
         return service.findById(new ScoreId(solutionId, judgeId));
     }
 
     @Operation(summary = "Create score", description = "Creates and returns a new score")
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('JUDGE')")
-    public ScoreDto create(@RequestBody ScoreDto scoreDto) {
-        return service.create(scoreDto);
+    public ScoreCreationDto create(@RequestBody ScoreCreationDto scoreCreationDto) {
+        return service.create(scoreCreationDto);
     }
 
     @Operation(summary = "Update score", description = "Updates and returns the score")
     @PutMapping("/{solutionId}/{judgeId}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('JUDGE')")
-    public ScoreDto update(@PathVariable Long solutionId, @PathVariable Long judgeId, @RequestBody ScoreDto scoreDto) {
-        return service.update(new ScoreId(solutionId, judgeId), scoreDto);
+    public ScoreFullDto update(@PathVariable Long solutionId, @PathVariable Long judgeId, @RequestBody ScoreFullDto scoreFullDto) {
+        return service.update(new ScoreId(solutionId, judgeId), scoreFullDto);
     }
 
     @Operation(summary = "Delete score by solutionId and judgeId", description = "Deletes the score and returns a status message")
@@ -75,14 +76,14 @@ public class ScoreController {
     @Operation(summary = "Get scores by solution ID", description = "Returns scores linked to the specified solution")
     @GetMapping("/solution/{solutionId}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR') or hasAuthority('USER')")
-    public Set<ScoreDto> getBySolution(@PathVariable Long solutionId) {
+    public Set<ScoreFullDto> getBySolution(@PathVariable Long solutionId) {
         return service.findBySolutionId(solutionId);
     }
 
     @Operation(summary = "Get scores by judge ID", description = "Returns scores given by the specified judge")
     @GetMapping("/judge/{judgeId}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('JUDGE')")
-    public Set<ScoreDto> getByJudge(@PathVariable Long judgeId) {
+    public Set<ScoreFullDto> getByJudge(@PathVariable Long judgeId) {
         return service.findByJudgeId(judgeId);
     }
 }

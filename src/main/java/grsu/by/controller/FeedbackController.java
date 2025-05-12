@@ -1,6 +1,7 @@
 package grsu.by.controller;
 
-import grsu.by.dto.FeedbackDto;
+import grsu.by.dto.feedbackDto.FeedbackCreationDto;
+import grsu.by.dto.feedbackDto.FeedbackFullDto;
 import grsu.by.service.FeedbackService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,22 +31,22 @@ public class FeedbackController {
 
     @Operation(summary = "Get feedback by ID", description = "Returns a single feedback by its ID")
     @GetMapping("/{id}")
-    public FeedbackDto getById(@PathVariable Long id) {
+    public FeedbackFullDto getById(@PathVariable Long id) {
         return service.findById(id);
     }
 
     @Operation(summary = "Create feedback", description = "Returns created feedback")
     @PostMapping
     @PreAuthorize("hasAuthority('JUDGE')")
-    public FeedbackDto create(@RequestBody FeedbackDto feedbackDto) {
-        return service.create(feedbackDto);
+    public FeedbackCreationDto create(@RequestBody FeedbackCreationDto feedbackCreationDto) {
+        return service.create(feedbackCreationDto);
     }
 
     @Operation(summary = "Update feedback", description = "Returns updated feedback")
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('JUDGE')")
-    public FeedbackDto update(@PathVariable Long id, @RequestBody FeedbackDto feedbackDto) {
-        return service.update(id, feedbackDto);
+    public FeedbackFullDto update(@PathVariable Long id, @RequestBody FeedbackFullDto feedbackFullDto) {
+        return service.update(id, feedbackFullDto);
     }
 
     @Operation(summary = "Delete feedback by ID", description = "Deletes feedback and returns status message")
@@ -67,20 +68,20 @@ public class FeedbackController {
     @Operation(summary = "Get feedback by judge ID", description = "Returns feedback left by a specific judge")
     @GetMapping("/judge/{judgeId}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('JUDGE') or hasAuthority('HACKATHON_CREATOR')")
-    public Set<FeedbackDto> getByJudge(@PathVariable Long judgeId) {
+    public Set<FeedbackFullDto> getByJudge(@PathVariable Long judgeId) {
         return service.findByJudgeId(judgeId);
     }
 
     @Operation(summary = "Get feedback by solution ID", description = "Returns feedback related to a specific solution")
     @GetMapping("/solution/{solutionId}")
-    public Set<FeedbackDto> getBySolution(@PathVariable Long solutionId) {
+    public Set<FeedbackFullDto> getBySolution(@PathVariable Long solutionId) {
         return service.findBySolutionId(solutionId);
     }
 
     @Operation(summary = "Get feedback by hackathon ID", description = "Returns all feedback for a specific hackathon")
     @GetMapping("/hackathon/{hackathonId}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
-    public Set<FeedbackDto> getByHackathon(@PathVariable Long hackathonId) {
+    public Set<FeedbackFullDto> getByHackathon(@PathVariable Long hackathonId) {
         return service.findByHackathonId(hackathonId);
     }
 }

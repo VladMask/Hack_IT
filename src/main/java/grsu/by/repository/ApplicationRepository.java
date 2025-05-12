@@ -11,7 +11,21 @@ import java.util.Set;
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     boolean existsByTeamIdAndHackathonId(Long teamId, Long hackathonId);
+
+    @Query("""
+        select a from Application a
+                left join fetch a.team t
+                left join fetch a.hackathon h
+                where a.team.id = :teamId
+    """)
     Set<Application> findAllByTeamId(Long teamId);
+
+    @Query("""
+        select a from Application a
+                left join fetch a.team t
+                left join fetch a.hackathon h
+                where a.hackathon.id = :hackathonId
+    """)
     Set<Application> findAllByHackathonId(Long hackathonId);
 
     @Query("""

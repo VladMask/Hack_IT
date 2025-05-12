@@ -1,22 +1,23 @@
 package grsu.by.service;
 
-import grsu.by.dto.PrizeDto;
+import grsu.by.dto.prizeDto.PrizeCreationDto;
+import grsu.by.dto.prizeDto.PrizeFullDto;
 
 import java.util.Set;
 
 public interface PrizeService {
 
-    PrizeDto create(PrizeDto dto);
+    PrizeCreationDto create(PrizeCreationDto dto);
 
-    PrizeDto findById(Long id);
+    PrizeFullDto findById(Long id);
 
-    PrizeDto update(Long id, PrizeDto newDto);
+    PrizeFullDto update(Long id, PrizeFullDto newDto);
 
     boolean deleteById(Long id);
 
-    Set<PrizeDto> findAll();
+    Set<PrizeFullDto> findAll();
 
-    Set<PrizeDto> findByHackathonId(Long hackathonId);
+    Set<PrizeFullDto> findByHackathonId(Long hackathonId);
 
-    Set<PrizeDto> findByTeamId(Long teamId);
+    Set<PrizeFullDto> findByTeamId(Long teamId);
 }

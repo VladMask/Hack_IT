@@ -1,22 +1,25 @@
 package grsu.by.service;
 
-import grsu.by.dto.ApplicationDto;
+import grsu.by.dto.applicationDto.ApplicationCreationDto;
+import grsu.by.dto.applicationDto.ApplicationFullDto;
 
 import java.util.Set;
 
 public interface ApplicationService {
 
-    ApplicationDto create(ApplicationDto dto);
+    ApplicationCreationDto create(ApplicationCreationDto dto);
 
-    ApplicationDto findById(Long id);
+    ApplicationFullDto findById(Long id);
 
-    ApplicationDto update(Long id, ApplicationDto newDto);
+    ApplicationFullDto update(Long id, ApplicationFullDto newDto);
 
     boolean deleteById(Long id);
 
-    Set<ApplicationDto> findByTeamId(Long teamId);
+    Set<ApplicationFullDto> findByTeamId(Long teamId);
 
-    Set<ApplicationDto> findByHackathonId(Long hackathonId);
+    Set<ApplicationFullDto> findByHackathonId(Long hackathonId);
 
     boolean acceptApplication(Long id);
+
+    boolean declineApplication(Long id);
 }

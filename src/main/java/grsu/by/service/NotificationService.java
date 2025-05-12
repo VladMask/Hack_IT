@@ -1,22 +1,23 @@
 package grsu.by.service;
 
-import grsu.by.dto.NotificationDto;
+import grsu.by.dto.notificationDto.NotificationCreationDto;
+import grsu.by.dto.notificationDto.NotificationFullDto;
 
 import java.util.Set;
 
 public interface NotificationService {
 
-    NotificationDto create(NotificationDto dto);
+    NotificationCreationDto create(NotificationCreationDto dto);
 
-    NotificationDto findById(Long id);
+    NotificationFullDto findById(Long id);
 
-    NotificationDto update(Long id, NotificationDto newDto);
+    NotificationFullDto update(Long id, NotificationFullDto newDto);
 
     boolean deleteById(Long id);
 
-    Set<NotificationDto> findAll();
+    Set<NotificationFullDto> findAll();
 
-    Set<NotificationDto> findByUserId(Long userId);
+    Set<NotificationFullDto> findByUserId(Long userId);
 
-    Set<NotificationDto> findByHackathonId(Long hackathonId);
+    Set<NotificationFullDto> findByHackathonId(Long hackathonId);
 }

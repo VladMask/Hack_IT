@@ -1,23 +1,24 @@
 package grsu.by.service;
 
-import grsu.by.dto.ScoreDto;
+import grsu.by.dto.scoreDto.ScoreCreationDto;
+import grsu.by.dto.scoreDto.ScoreFullDto;
 import grsu.by.entity.ScoreId;
 
 import java.util.Set;
 
 public interface ScoreService {
 
-    ScoreDto create(ScoreDto dto);
+    ScoreCreationDto create(ScoreCreationDto dto);
 
-    ScoreDto findById(ScoreId id);
+    ScoreFullDto findById(ScoreId id);
 
-    ScoreDto update(ScoreId id, ScoreDto newDto);
+    ScoreFullDto update(ScoreId id, ScoreFullDto newDto);
 
     boolean deleteById(ScoreId id);
 
-    Set<ScoreDto> findAll();
+    Set<ScoreFullDto> findAll();
 
-    Set<ScoreDto> findBySolutionId(Long solutionId);
+    Set<ScoreFullDto> findBySolutionId(Long solutionId);
 
-    Set<ScoreDto> findByJudgeId(Long judgeId);
+    Set<ScoreFullDto> findByJudgeId(Long judgeId);
 }

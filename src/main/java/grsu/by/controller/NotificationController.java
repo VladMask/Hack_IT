@@ -1,6 +1,7 @@
 package grsu.by.controller;
 
-import grsu.by.dto.NotificationDto;
+import grsu.by.dto.notificationDto.NotificationCreationDto;
+import grsu.by.dto.notificationDto.NotificationFullDto;
 import grsu.by.service.NotificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,28 +32,28 @@ public class NotificationController {
     @Operation(summary = "Get all notifications", description = "Returns a list of all notifications")
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Set<NotificationDto> getAll() {
+    public Set<NotificationFullDto> getAll() {
         return service.findAll();
     }
 
     @Operation(summary = "Get notification by ID", description = "Returns a single notification by its ID")
     @GetMapping("/{id}")
-    public NotificationDto getById(@PathVariable Long id) {
+    public NotificationFullDto getById(@PathVariable Long id) {
         return service.findById(id);
     }
 
     @Operation(summary = "Create notification", description = "Creates and returns a new notification")
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
-    public NotificationDto create(@RequestBody NotificationDto notificationDto) {
-        return service.create(notificationDto);
+    public NotificationCreationDto create(@RequestBody NotificationCreationDto notificationCreationDto) {
+        return service.create(notificationCreationDto);
     }
 
     @Operation(summary = "Update notification", description = "Updates and returns the notification")
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
-    public NotificationDto update(@PathVariable Long id, @RequestBody NotificationDto notificationDto) {
-        return service.update(id, notificationDto);
+    public NotificationFullDto update(@PathVariable Long id, @RequestBody NotificationFullDto notificationFullDto) {
+        return service.update(id, notificationFullDto);
     }
 
     @Operation(summary = "Delete notification by ID", description = "Deletes the notification and returns a status message")
@@ -73,14 +74,14 @@ public class NotificationController {
 
     @Operation(summary = "Get notifications by user ID", description = "Returns all notifications for the specified user")
     @GetMapping("/user/{userId}")
-    public Set<NotificationDto> getByUser(@PathVariable Long userId) {
+    public Set<NotificationFullDto> getByUser(@PathVariable Long userId) {
         return service.findByUserId(userId);
     }
 
     @Operation(summary = "Get notifications by hackathon ID", description = "Returns all notifications for the specified hackathon")
     @GetMapping("/hackathon/{hackathonId}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
-    public Set<NotificationDto> getByHackathon(@PathVariable Long hackathonId) {
+    public Set<NotificationFullDto> getByHackathon(@PathVariable Long hackathonId) {
         return service.findByHackathonId(hackathonId);
     }
 }

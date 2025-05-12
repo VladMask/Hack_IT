@@ -3,11 +3,9 @@ package grsu.by.service.impl;
 import grsu.by.dto.teamDto.TeamCreationDto;
 import grsu.by.dto.teamDto.TeamFullDto;
 import grsu.by.entity.Team;
-import grsu.by.entity.TeamHackathon;
 import grsu.by.entity.User;
 import grsu.by.entity.UserTeam;
 import grsu.by.entity.UserTeamId;
-import grsu.by.repository.HackathonRepository;
 import grsu.by.repository.TeamHackathonRepository;
 import grsu.by.repository.TeamRepository;
 import grsu.by.repository.UserRepository;
@@ -20,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,7 +31,6 @@ public class TeamServiceImpl implements TeamService {
     private final UserRepository userRepository;
     private final UserDetailsServiceImpl userDetailsService;
     private final TeamHackathonRepository teamHackathonRepository;
-    private final HackathonRepository hackathonRepository;
     private final ModelMapper mapper;
 
     @Override
@@ -97,16 +93,6 @@ public class TeamServiceImpl implements TeamService {
         return teamRepository.findAll().stream()
                 .map(team -> mapper.map(team, TeamCreationDto.class))
                 .collect(Collectors.toSet());
-    }
-
-    @Override
-    public boolean unregisterTeamFromHackathon(Long teamId, Long hackathonId) {
-        Optional<TeamHackathon> record = teamHackathonRepository.findByTeamIdAndHackathonId(teamId, hackathonId);
-        if (record.isPresent()) {
-            teamHackathonRepository.delete(record.get());
-            return true;
-        }
-        return false;
     }
 
     @Override

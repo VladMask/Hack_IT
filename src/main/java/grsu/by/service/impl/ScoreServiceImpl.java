@@ -1,6 +1,7 @@
 package grsu.by.service.impl;
 
-import grsu.by.dto.ScoreDto;
+import grsu.by.dto.scoreDto.ScoreCreationDto;
+import grsu.by.dto.scoreDto.ScoreFullDto;
 import grsu.by.entity.Score;
 import grsu.by.entity.ScoreId;
 import grsu.by.entity.Solution;
@@ -29,7 +30,7 @@ public class ScoreServiceImpl implements ScoreService {
     private final ModelMapper mapper;
 
     @Override
-    public ScoreDto create(ScoreDto dto) {
+    public ScoreCreationDto create(ScoreCreationDto dto) {
         Score score = mapper.map(dto, Score.class);
         User judge = userRepository.findById(dto.getJudgeId()).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(User.class, dto.getJudgeId().toString())
@@ -39,19 +40,19 @@ public class ScoreServiceImpl implements ScoreService {
         );
         score.setJudge(judge);
         score.setSolution(solution);
-        return mapper.map(scoreRepository.save(score), ScoreDto.class);
+        return mapper.map(scoreRepository.save(score), ScoreCreationDto.class);
     }
 
     @Override
-    public ScoreDto findById(ScoreId id) {
+    public ScoreFullDto findById(ScoreId id) {
         Score score = scoreRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Score.class, id.toString())
         );
-        return mapper.map(score, ScoreDto.class);
+        return mapper.map(score, ScoreFullDto.class);
     }
 
     @Override
-    public ScoreDto update(ScoreId id, ScoreDto newDto) {
+    public ScoreFullDto update(ScoreId id, ScoreFullDto newDto) {
         Score score = scoreRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Score.class, id.toString())
         );
@@ -60,7 +61,7 @@ public class ScoreServiceImpl implements ScoreService {
             score.setValue(newDto.getValue());
         }
         
-        return mapper.map(scoreRepository.save(score), ScoreDto.class);
+        return mapper.map(scoreRepository.save(score), ScoreFullDto.class);
     }
 
     @Override
@@ -73,23 +74,23 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public Set<ScoreDto> findAll() {
+    public Set<ScoreFullDto> findAll() {
         return scoreRepository.findAll().stream()
-                .map(score -> mapper.map(score, ScoreDto.class))
+                .map(score -> mapper.map(score, ScoreFullDto.class))
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Set<ScoreDto> findBySolutionId(Long solutionId) {
+    public Set<ScoreFullDto> findBySolutionId(Long solutionId) {
         return scoreRepository.findBySolutionId(solutionId).stream()
-                .map(score -> mapper.map(score, ScoreDto.class))
+                .map(score -> mapper.map(score, ScoreFullDto.class))
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Set<ScoreDto> findByJudgeId(Long judgeId) {
+    public Set<ScoreFullDto> findByJudgeId(Long judgeId) {
         return scoreRepository.findByJudgeId(judgeId).stream()
-                .map(score -> mapper.map(score, ScoreDto.class))
+                .map(score -> mapper.map(score, ScoreFullDto.class))
                 .collect(Collectors.toSet());
     }
 }

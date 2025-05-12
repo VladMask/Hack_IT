@@ -1,12 +1,11 @@
 package grsu.by.service.impl;
 
-import grsu.by.dto.PrizeDto;
+import grsu.by.dto.prizeDto.PrizeCreationDto;
+import grsu.by.dto.prizeDto.PrizeFullDto;
 import grsu.by.entity.Hackathon;
 import grsu.by.entity.Prize;
-import grsu.by.entity.TeamHackathon;
 import grsu.by.repository.HackathonRepository;
 import grsu.by.repository.PrizeRepository;
-import grsu.by.repository.TeamHackathonRepository;
 import grsu.by.service.PrizeService;
 import grsu.by.util.ExceptionUtil;
 import jakarta.transaction.Transactional;
@@ -24,29 +23,28 @@ public class PrizeServiceImpl implements PrizeService {
 
     private final PrizeRepository prizeRepository;
     private final HackathonRepository hackathonRepository;
-    private final TeamHackathonRepository teamHackathonRepository;
     private final ModelMapper mapper;
 
     @Override
-    public PrizeDto create(PrizeDto dto) {
+    public PrizeCreationDto create(PrizeCreationDto dto) {
         Prize prize = mapper.map(dto, Prize.class);
         Hackathon hackathon = hackathonRepository.findById(dto.getHackathonId()).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Hackathon.class, dto.getHackathonId().toString())
         );
         prize.setHackathon(hackathon);
-        return mapper.map(prizeRepository.save(prize), PrizeDto.class);
+        return mapper.map(prizeRepository.save(prize), PrizeCreationDto.class);
     }
 
     @Override
-    public PrizeDto findById(Long id) {
+    public PrizeFullDto findById(Long id) {
         Prize prize = prizeRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Prize.class, id.toString())
         );
-        return mapper.map(prize, PrizeDto.class);
+        return mapper.map(prize, PrizeFullDto.class);
     }
 
     @Override
-    public PrizeDto update(Long id, PrizeDto newDto) {
+    public PrizeFullDto update(Long id, PrizeFullDto newDto) {
         Prize prize = prizeRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Prize.class, id.toString())
         );
@@ -57,14 +55,8 @@ public class PrizeServiceImpl implements PrizeService {
         if (newDto.getQuantity() != null) {
             prize.setQuantity(newDto.getQuantity());
         }
-        if(newDto.getTeamHackathonId() != null){
-            TeamHackathon teamHackathon = teamHackathonRepository.findById(newDto.getTeamHackathonId()).orElseThrow(
-                    () -> ExceptionUtil.throwEntityNotFoundException(TeamHackathon.class, newDto.getTeamHackathonId().toString())
-            );
-            prize.setTeamHackathon(teamHackathon);
-        }
         
-        return mapper.map(prizeRepository.save(prize), PrizeDto.class);
+        return mapper.map(prizeRepository.save(prize), PrizeFullDto.class);
     }
 
     @Override
@@ -77,23 +69,23 @@ public class PrizeServiceImpl implements PrizeService {
     }
 
     @Override
-    public Set<PrizeDto> findAll() {
+    public Set<PrizeFullDto> findAll() {
         return prizeRepository.findAll().stream()
-                .map(prize -> mapper.map(prize, PrizeDto.class))
+                .map(prize -> mapper.map(prize, PrizeFullDto.class))
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Set<PrizeDto> findByHackathonId(Long hackathonId) {
+    public Set<PrizeFullDto> findByHackathonId(Long hackathonId) {
         return prizeRepository.findByHackathonId(hackathonId).stream()
-                .map(prize -> mapper.map(prize, PrizeDto.class))
+                .map(prize -> mapper.map(prize, PrizeFullDto.class))
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Set<PrizeDto> findByTeamId(Long teamId) {
+    public Set<PrizeFullDto> findByTeamId(Long teamId) {
         return prizeRepository.findByTeamId(teamId).stream()
-                .map(prize -> mapper.map(prize, PrizeDto.class))
+                .map(prize -> mapper.map(prize, PrizeFullDto.class))
                 .collect(Collectors.toSet());
     }
 }

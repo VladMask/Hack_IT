@@ -1,6 +1,7 @@
 package grsu.by.service.impl;
 
-import grsu.by.dto.ApplicationDto;
+import grsu.by.dto.applicationDto.ApplicationCreationDto;
+import grsu.by.dto.applicationDto.ApplicationFullDto;
 import grsu.by.entity.Application;
 import grsu.by.entity.Hackathon;
 import grsu.by.entity.Team;
@@ -17,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,7 +34,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final TeamHackathonRepository teamHackathonRepository;
 
     @Override
-    public ApplicationDto create(ApplicationDto dto) {
+    public ApplicationCreationDto create(ApplicationCreationDto dto) {
         Team team = teamRepository.findById(dto.getTeamId()).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Team.class, dto.getTeamId().toString())
         );
@@ -53,19 +55,19 @@ public class ApplicationServiceImpl implements ApplicationService {
         application.setHackathon(hackathon);
         application.setIsAccepted(false);
 
-        return mapper.map(applicationRepository.save(application), ApplicationDto.class);
+        return mapper.map(applicationRepository.save(application), ApplicationCreationDto.class);
     }
 
     @Override
-    public ApplicationDto findById(Long id) {
+    public ApplicationFullDto findById(Long id) {
         Application application = applicationRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Application.class, id.toString())
         );
-        return mapper.map(application, ApplicationDto.class);
+        return mapper.map(application, ApplicationFullDto.class);
     }
 
     @Override
-    public ApplicationDto update(Long id, ApplicationDto newDto) {
+    public ApplicationFullDto update(Long id, ApplicationFullDto newDto) {
         Application application = applicationRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Application.class, id.toString())
         );
@@ -78,7 +80,7 @@ public class ApplicationServiceImpl implements ApplicationService {
             application.setProjectDescription(newDto.getProjectDescription());
         }
 
-        return mapper.map(applicationRepository.save(application), ApplicationDto.class);
+        return mapper.map(applicationRepository.save(application), ApplicationFullDto.class);
     }
 
     @Override
@@ -91,18 +93,18 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public Set<ApplicationDto> findByTeamId(Long teamId) {
+    public Set<ApplicationFullDto> findByTeamId(Long teamId) {
         Set<Application> applications = applicationRepository.findAllByTeamId(teamId);
         return applications.stream()
-                .map(app -> mapper.map(app, ApplicationDto.class))
+                .map(app -> mapper.map(app, ApplicationFullDto.class))
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Set<ApplicationDto> findByHackathonId(Long hackathonId) {
+    public Set<ApplicationFullDto> findByHackathonId(Long hackathonId) {
         Set<Application> applications = applicationRepository.findAllByHackathonId(hackathonId);
         return applications.stream()
-                .map(app -> mapper.map(app, ApplicationDto.class))
+                .map(app -> mapper.map(app, ApplicationFullDto.class))
                 .collect(Collectors.toSet());
     }
 
@@ -115,6 +117,16 @@ public class ApplicationServiceImpl implements ApplicationService {
         return registerTeamForHackathon(application.getTeam(), application.getHackathon());
     }
 
+    @Override
+    public boolean declineApplication(Long id) {
+        Application application = applicationRepository.findByIdWithDetails(id).orElseThrow(
+                () -> ExceptionUtil.throwEntityNotFoundException(Application.class, id.toString())
+        );
+        application.setIsAccepted(false);
+        return unregisterTeamFromHackathon(application.getTeam().getId(), application.getHackathon().getId());
+    }
+
+
     private boolean registerTeamForHackathon(Team team, Hackathon hackathon) {
         if (teamHackathonRepository.existsByTeamIdAndHackathonId(team.getId(), hackathon.getId())) {
             return false;
@@ -126,6 +138,15 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         teamHackathonRepository.save(teamHackathon);
         return true;
+    }
+
+    private boolean unregisterTeamFromHackathon(Long teamId, Long hackathonId) {
+        Optional<TeamHackathon> record = teamHackathonRepository.findByTeamIdAndHackathonId(teamId, hackathonId);
+        if (record.isPresent()) {
+            teamHackathonRepository.delete(record.get());
+            return true;
+        }
+        return false;
     }
 }
 
