@@ -37,9 +37,21 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/swagger-ui/**").permitAll()
                 .requestMatchers("/v3/api-docs/**").permitAll()
+
                 .requestMatchers("/api/v1/roles/**").hasAuthority("ADMIN")
+
+                .requestMatchers("/api/v1/scores/**").hasAnyAuthority("ADMIN", "JUDGE")
+                .requestMatchers("/api/v1/feedback/**").hasAnyAuthority("ADMIN", "JUDGE", "HACKATHON_CREATOR")
+                .requestMatchers("/api/v1/hackathons/**").hasAnyAuthority("ADMIN", "HACKATHON_CREATOR")
+                .requestMatchers("/api/v1/notifications/**").hasAnyAuthority("ADMIN", "HACKATHON_CREATOR")
+                .requestMatchers("/api/v1/prizes/**").hasAnyAuthority("ADMIN", "HACKATHON_CREATOR", "USER")
+                .requestMatchers("/api/v1/solutions/**").hasAnyAuthority("ADMIN", "HACKATHON_CREATOR", "USER")
+                .requestMatchers("/api/v1/teams/**").hasAnyAuthority("ADMIN", "HACKATHON_CREATOR", "USER")
+                .requestMatchers("/api/v1/users/**").authenticated()
+
                 .anyRequest().authenticated()
         );
+
 
         http.httpBasic(AbstractHttpConfigurer::disable);
 

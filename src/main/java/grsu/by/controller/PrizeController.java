@@ -2,10 +2,12 @@ package grsu.by.controller;
 
 import grsu.by.dto.PrizeDto;
 import grsu.by.service.PrizeService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,48 +28,60 @@ public class PrizeController {
 
     private final PrizeService service;
 
+    @Operation(summary = "Get all prizes", description = "Returns a list of all prizes")
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Set<PrizeDto> getAll() {
         return service.findAll();
     }
 
+    @Operation(summary = "Get prize by ID", description = "Returns a single prize by its ID")
     @GetMapping("/{id}")
     public PrizeDto getById(@PathVariable Long id) {
         return service.findById(id);
     }
 
+    @Operation(summary = "Create prize", description = "Creates and returns a new prize")
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
     public PrizeDto create(@RequestBody PrizeDto prizeDto) {
         return service.create(prizeDto);
     }
 
+    @Operation(summary = "Update prize", description = "Updates and returns the prize")
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
     public PrizeDto update(@PathVariable Long id, @RequestBody PrizeDto prizeDto) {
         return service.update(id, prizeDto);
     }
 
+    @Operation(summary = "Delete prize by ID", description = "Deletes the prize and returns a status message")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
     public ResponseEntity<String> deleteById(@PathVariable Long id) {
         if (service.deleteById(id)) {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("Entity deleted successfully");
-        }
-        else {
+        } else {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An unexpected error has occurred");
         }
     }
 
+    @Operation(summary = "Get prizes by hackathon ID", description = "Returns all prizes for the specified hackathon")
     @GetMapping("/hackathon/{hackathonId}")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
     public Set<PrizeDto> getByHackathonId(@PathVariable Long hackathonId) {
         return service.findByHackathonId(hackathonId);
     }
 
+    @Operation(summary = "Get prizes by team ID", description = "Returns all prizes for the specified team")
     @GetMapping("/team/{teamId}")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public Set<PrizeDto> getByTeamId(@PathVariable Long teamId) {
         return service.findByTeamId(teamId);
     }
-} 
+}

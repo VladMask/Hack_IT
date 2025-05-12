@@ -79,29 +79,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean setUserRole(Long userId, String roleName) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> ExceptionUtil.throwEntityNotFoundException(User.class, userId.toString())
-        );
-        
-        Role role = roleRepository.findByName(roleName).orElseThrow(
-                () -> ExceptionUtil.throwEntityNotFoundException(Role.class, roleName)
-        );
-
-
-        if (user.getUserRoles().stream().anyMatch(ur -> ur.getRole().getName().equals(roleName))) {
-            return false;
-        }
-        
-        UserRole userRole = new UserRole();
-        userRole.setUser(user);
-        userRole.setRole(role);
-        userRoleRepository.save(userRole);
-        
-        return true;
-    }
-
-    @Override
     public boolean isUserInTeam(UserTeamId id) {
         return userTeamRepository.existsById(id);
     }

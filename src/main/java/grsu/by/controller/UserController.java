@@ -4,6 +4,7 @@ import grsu.by.dto.userDto.UserBaseDto;
 import grsu.by.dto.userDto.UserCreationDto;
 import grsu.by.entity.UserTeamId;
 import grsu.by.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,145 +23,112 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
+@RequiredArgsConstructor
 @Tag(name = "UserController", description = "The User API")
 public class UserController {
 
     private final UserService service;
 
+    @Operation(summary = "Create a new user", description = "Creates a new user and returns the created user entity")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserBaseDto create(@RequestBody @Valid UserCreationDto dto) {
         return service.create(dto);
     }
 
+    @Operation(summary = "Find user by ID", description = "Returns user details for the given ID")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
     public UserBaseDto findById(@PathVariable Long id) {
         return service.findById(id);
     }
 
+    @Operation(summary = "Update user details", description = "Updates user details for the given ID and returns the updated user entity")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public UserBaseDto update(@PathVariable Long id, @RequestBody @Valid UserBaseDto dto) {
         return service.update(id, dto);
     }
 
+    @Operation(summary = "Delete a user", description = "Deletes a user by ID")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> delete(@PathVariable Long id) {
         if (service.deleteById(id)) {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Entity deleted successfully");
-        }
-        else {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity.ok("Entity deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An unexpected error has occurred");
         }
     }
 
-    @PostMapping("/{userId}/roles")
-    @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> setUserRole(@PathVariable Long userId, @RequestParam String roleName){
-        if (service.setUserRole(userId, roleName)) {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Role set successfully");
-        }
-        else {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An unexpected error has occurred");
-        }
-
-    }
-
+    @Operation(summary = "Add user to a team", description = "Adds a user to a team with the specified user and team IDs")
     @PostMapping("/{userId}/teams/{teamId}")
     public ResponseEntity<String> addUserToTeam(@PathVariable Long userId, @PathVariable Long teamId) {
         if (service.addUserToTeam(new UserTeamId(userId, teamId))) {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("User added to team successfully");
-        }
-        else {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity.ok("User added to team successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An unexpected error has occurred");
         }
     }
 
+    @Operation(summary = "Remove user from a team", description = "Removes the user from a team based on user and team IDs")
     @DeleteMapping("/{userId}/teams/{teamId}")
     public ResponseEntity<String> removeUserFromTeam(@PathVariable Long userId, @PathVariable Long teamId) {
         if (service.removeUserFromTeam(new UserTeamId(userId, teamId))) {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("User removed from team successfully");
-        }
-        else {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity.ok("User removed from team successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An unexpected error has occurred");
         }
     }
 
+    @Operation(summary = "Check if user is in a team", description = "Checks if the user is a member of a specific team")
     @GetMapping("/{userId}/teams")
     public ResponseEntity<String> isUserInTeam(@PathVariable Long userId, @RequestParam Long teamId) {
         if (service.isUserInTeam(new UserTeamId(userId, teamId))) {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("User is a team participant");
-        }
-        else {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity.ok("User is a team participant");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("User is not a team participant");
         }
     }
 
-    @PostMapping("/{userId}/roles")
+    @Operation(summary = "Add role to a user", description = "Adds a role to a user")
+    @PostMapping("/{userId}/roles/add")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> addRoleToUser(@PathVariable Long userId, @RequestParam String roleName) {
         if (service.addRoleToUser(userId, roleName)) {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Role added successfully");
-        }
-        else {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity.ok("Role added successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An unexpected error has occurred");
         }
     }
 
-    @DeleteMapping("/{userId}/roles")
+    @Operation(summary = "Remove role from a user", description = "Removes a role from a user")
+    @DeleteMapping("/{userId}/roles/remove")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> removeRoleFromUser(@PathVariable Long userId, @RequestParam String roleName) {
         if (service.removeRoleFromUser(userId, roleName)) {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Role removed successfully");
-        }
-        else {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity.ok("Role removed successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An unexpected error has occurred");
         }
     }
 
+    @Operation(summary = "Check if a user has a specific role", description = "Checks if the user has a specified role")
     @GetMapping("/{userId}/roles")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> hasRole(@PathVariable Long userId, @RequestParam String roleName) {
         if (service.hasRole(userId, roleName)) {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("User has specified role");
-        }
-        else {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity.ok("User has specified role");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("User hasn't specified role");
         }
     }
 }
-

@@ -2,10 +2,12 @@ package grsu.by.controller;
 
 import grsu.by.dto.ApplicationDto;
 import grsu.by.service.ApplicationService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,23 +28,30 @@ public class ApplicationController {
 
     private final ApplicationService service;
 
+    @Operation(summary = "Get application by ID", description = "Returns a single application by its ID")
     @GetMapping("/{id}")
     public ApplicationDto getById(@PathVariable Long id) {
         return service.findById(id);
     }
 
+    @Operation(summary = "Creates application", description = "Returns created application")
     @PostMapping
+    @PreAuthorize("hasAuthority('USER')")
     public ApplicationDto create(@RequestBody ApplicationDto applicationDto) {
         return service.create(applicationDto);
     }
 
+    @Operation(summary = "Updates application", description = "Returns updated application")
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('USER')")
     public ApplicationDto update(@PathVariable Long id, @RequestBody ApplicationDto applicationDto) {
         return service.update(id, applicationDto);
     }
 
+    @Operation(summary = "Deletes application by ID", description = "Returns message ")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
     public ResponseEntity<String> deleteById(@PathVariable Long id) {
         if (service.deleteById(id)) {
             return ResponseEntity
@@ -56,13 +65,17 @@ public class ApplicationController {
         }
     }
 
+    @Operation(summary = "Get applications by teamID", description = "Returns teams applications")
     @GetMapping("/team/{teamId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Set<ApplicationDto> getByTeam(@PathVariable Long teamId) {
         return service.findByTeamId(teamId);
     }
 
+    @Operation(summary = "Get hackathon by teamID", description = "Returns hackathons applications")
     @GetMapping("/hackathon/{hackathonId}")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('JUDGE') or hasAuthority('HACKATHON_CREATOR')")
     public Set<ApplicationDto> getByHackathon(@PathVariable Long hackathonId) {
         return service.findByHackathonId(hackathonId);
     }
-} 
+}

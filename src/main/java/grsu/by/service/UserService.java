@@ -14,8 +14,6 @@ public interface UserService {
 
     boolean deleteById(Long id);
 
-    boolean setUserRole(Long userId, String roleName);
-
     boolean addRoleToUser(Long userId, String roleName);
 
     boolean removeRoleFromUser(Long userId, String roleName);

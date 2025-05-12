@@ -2,10 +2,12 @@ package grsu.by.controller;
 
 import grsu.by.dto.NotificationDto;
 import grsu.by.service.NotificationService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,49 +28,59 @@ public class NotificationController {
 
     private final NotificationService service;
 
+    @Operation(summary = "Get all notifications", description = "Returns a list of all notifications")
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Set<NotificationDto> getAll() {
         return service.findAll();
     }
 
+    @Operation(summary = "Get notification by ID", description = "Returns a single notification by its ID")
     @GetMapping("/{id}")
     public NotificationDto getById(@PathVariable Long id) {
         return service.findById(id);
     }
 
+    @Operation(summary = "Create notification", description = "Creates and returns a new notification")
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
     public NotificationDto create(@RequestBody NotificationDto notificationDto) {
         return service.create(notificationDto);
     }
 
+    @Operation(summary = "Update notification", description = "Updates and returns the notification")
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
     public NotificationDto update(@PathVariable Long id, @RequestBody NotificationDto notificationDto) {
         return service.update(id, notificationDto);
     }
 
+    @Operation(summary = "Delete notification by ID", description = "Deletes the notification and returns a status message")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
     public ResponseEntity<String> deleteById(@PathVariable Long id) {
         if (service.deleteById(id)) {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("Entity deleted successfully");
-        }
-        else {
+        } else {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An unexpected error has occurred");
         }
     }
 
+    @Operation(summary = "Get notifications by user ID", description = "Returns all notifications for the specified user")
     @GetMapping("/user/{userId}")
     public Set<NotificationDto> getByUser(@PathVariable Long userId) {
         return service.findByUserId(userId);
     }
 
+    @Operation(summary = "Get notifications by hackathon ID", description = "Returns all notifications for the specified hackathon")
     @GetMapping("/hackathon/{hackathonId}")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
     public Set<NotificationDto> getByHackathon(@PathVariable Long hackathonId) {
         return service.findByHackathonId(hackathonId);
     }
-
-} 
+}
