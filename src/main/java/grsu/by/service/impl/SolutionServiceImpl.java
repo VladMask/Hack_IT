@@ -49,6 +49,7 @@ public class SolutionServiceImpl implements SolutionService {
         Solution solution = solutionRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Solution.class, id.toString())
         );
+
         return mapper.map(solution, SolutionFullDto.class);
     }
 

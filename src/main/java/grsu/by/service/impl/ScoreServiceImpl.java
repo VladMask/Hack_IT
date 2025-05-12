@@ -30,7 +30,7 @@ public class ScoreServiceImpl implements ScoreService {
     private final ModelMapper mapper;
 
     @Override
-    public ScoreCreationDto create(ScoreCreationDto dto) {
+    public ScoreFullDto create(ScoreCreationDto dto) {
         Score score = mapper.map(dto, Score.class);
         User judge = userRepository.findById(dto.getJudgeId()).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(User.class, dto.getJudgeId().toString())
@@ -40,7 +40,8 @@ public class ScoreServiceImpl implements ScoreService {
         );
         score.setJudge(judge);
         score.setSolution(solution);
-        return mapper.map(scoreRepository.save(score), ScoreCreationDto.class);
+        score.setId(new ScoreId(judge.getId(), solution.getId()));
+        return mapper.map(scoreRepository.save(score), ScoreFullDto.class);
     }
 
     @Override

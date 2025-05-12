@@ -44,11 +44,13 @@ public class FeedbackServiceImpl implements FeedbackService {
                 () -> ExceptionUtil.throwEntityNotFoundException(Hackathon.class, dto.getHackathonId().toString())
         );
 
-        if (!hackathon.getJudges().contains(judge)) {
+        Set<User> judges = userRepository.findJudgesByHackathonId(dto.getHackathonId());
+        Set<Solution> solutions = solutionRepository.findByHackathonId(dto.getHackathonId());
+        if (!judges.contains(judge)) {
             throw new IllegalStateException("User is not a judge for this hackathon");
         }
 
-        if (!solution.getHackathon().getId().equals(hackathon.getId())) {
+        if (!solutions.contains(solution)) {
             throw new IllegalStateException("Solution does not belong to the specified hackathon");
         }
 

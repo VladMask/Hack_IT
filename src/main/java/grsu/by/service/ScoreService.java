@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface ScoreService {
 
-    ScoreCreationDto create(ScoreCreationDto dto);
+    ScoreFullDto create(ScoreCreationDto dto);
 
     ScoreFullDto findById(ScoreId id);
 

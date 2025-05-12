@@ -46,7 +46,7 @@ public class ScoreController {
     @Operation(summary = "Create score", description = "Creates and returns a new score")
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('JUDGE')")
-    public ScoreCreationDto create(@RequestBody ScoreCreationDto scoreCreationDto) {
+    public ScoreFullDto create(@RequestBody ScoreCreationDto scoreCreationDto) {
         return service.create(scoreCreationDto);
     }
 
