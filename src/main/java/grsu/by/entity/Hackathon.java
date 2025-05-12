@@ -74,22 +74,22 @@ public class Hackathon implements Serializable {
     @Column(name = "result_announcement")
     private OffsetDateTime resultsAnnouncement;
 
-    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Feedback> feedbacks;
 
-    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<TeamHackathon> teamHackathons;
 
-    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Solution> solutions;
 
-    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Notification> notifications;
 
-    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Application> applications;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "user_hackathons",
             joinColumns = @JoinColumn(name = "user_role_id", referencedColumnName = "id"),

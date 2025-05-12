@@ -22,6 +22,7 @@ public class SolutionFullDto {
 
     private HackathonShortDto hackathon;
     private TeamCreationDto team;
+    private OffsetDateTime submittedAt;
     private Boolean isGitRepository = false;
     private String repositoryUrl;
     private String filesUrl;

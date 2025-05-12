@@ -27,12 +27,12 @@ public class Score {
     @EmbeddedId
     private ScoreId id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @MapsId("solutionId")
     @JoinColumn(name = "solution_id")
     private Solution solution;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @MapsId("judgeId")
     @JoinColumn(name = "judge_id")
     private User judge;

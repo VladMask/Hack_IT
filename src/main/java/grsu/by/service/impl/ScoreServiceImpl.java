@@ -67,9 +67,9 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public boolean deleteById(ScoreId id) {
         scoreRepository.deleteById(id);
-        if (scoreRepository.existsById(id)) {
-            throw ExceptionUtil.throwEntityDeletionException(Score.class, id.toString());
-        }
+//        if (scoreRepository.existsById(id)) {
+//            throw ExceptionUtil.throwEntityDeletionException(Score.class, id.toString());
+//        }
         return true;
     }
 
