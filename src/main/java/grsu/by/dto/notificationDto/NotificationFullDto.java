@@ -1,5 +1,6 @@
-package grsu.by.dto;
+package grsu.by.dto.notificationDto;
 
+import grsu.by.dto.hackathonDto.HackathonShortDto;
 import grsu.by.dto.userDto.UserBaseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +13,11 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserTeamDto {
+public class NotificationFullDto {
+
+    private String title;
+    private String content;
     private UserBaseDto user;
-    private Boolean isLeader = false;
+    private HackathonShortDto hackathon;
 }
+

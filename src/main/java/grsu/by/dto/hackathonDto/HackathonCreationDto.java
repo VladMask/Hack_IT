@@ -1,6 +1,6 @@
 package grsu.by.dto.hackathonDto;
 
-import grsu.by.dto.PrizeDto;
+import grsu.by.dto.prizeDto.PrizeCreationDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -43,7 +43,7 @@ public class HackathonCreationDto implements Serializable {
     private OffsetDateTime assessmentEnd;
     @NotNull
     private OffsetDateTime resultsAnnouncement;
-    private Set<PrizeDto> prizes;
+    private Set<PrizeCreationDto> prizes;
 }
 
 

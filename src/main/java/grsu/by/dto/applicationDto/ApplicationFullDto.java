@@ -1,5 +1,7 @@
-package grsu.by.dto;
+package grsu.by.dto.applicationDto;
 
+import grsu.by.dto.hackathonDto.HackathonShortDto;
+import grsu.by.dto.teamDto.TeamCreationDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -15,16 +17,12 @@ import java.time.OffsetDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplicationDto {
+public class ApplicationFullDto {
 
-    @NotNull
-    private Long hackathonId;
-    @NotNull
-    private Long teamId;
-    @NotBlank
+    private HackathonShortDto hackathon;
+    private TeamCreationDto team;
     private String projectDescription;
-
     private OffsetDateTime submittedAt;
+    private Boolean isAccepted;
 
-    private Boolean isAccepted = false;
 }

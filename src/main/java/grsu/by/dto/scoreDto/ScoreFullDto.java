@@ -1,6 +1,7 @@
-package grsu.by.dto;
+package grsu.by.dto.scoreDto;
 
-import jakarta.validation.constraints.NotNull;
+import grsu.by.dto.solutionDto.SolutionShortDto;
+import grsu.by.dto.userDto.UserBaseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,11 +13,8 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScoreDto {
-    @NotNull
-    private Long solutionId;
-    @NotNull
-    private Long judgeId;
-    @NotNull
+public class ScoreFullDto {
+    private SolutionShortDto solution;
+    private UserBaseDto judge;
     private Integer value;
 }

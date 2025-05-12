@@ -1,6 +1,5 @@
-package grsu.by.dto;
+package grsu.by.dto.scoreDto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,17 +12,11 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PrizeDto {
-
-    @NotBlank
-    private String name;
-
+public class ScoreCreationDto {
     @NotNull
-    private Integer quantity;
-
+    private Long solutionId;
     @NotNull
-    private Long hackathonId;
-
-    private Long teamHackathonId;
+    private Long judgeId;
+    @NotNull
+    private Integer value;
 }
-

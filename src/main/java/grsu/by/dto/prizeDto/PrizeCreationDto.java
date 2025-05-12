@@ -1,4 +1,4 @@
-package grsu.by.dto;
+package grsu.by.dto.prizeDto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,18 +13,17 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotificationDto {
+public class PrizeCreationDto {
 
     @NotBlank
-    private String title;
-
-    @NotBlank
-    private String content;
+    private String name;
 
     @NotNull
-    private Long userId;
+    private Integer quantity;
 
     @NotNull
     private Long hackathonId;
+
+    private Long teamHackathonId;
 }
 

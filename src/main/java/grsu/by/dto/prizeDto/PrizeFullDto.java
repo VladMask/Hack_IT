@@ -1,7 +1,7 @@
-package grsu.by.dto;
+package grsu.by.dto.prizeDto;
 
+import grsu.by.dto.TeamHackathonDto;
 import grsu.by.dto.hackathonDto.HackathonShortDto;
-import grsu.by.dto.teamDto.TeamCreationDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,12 +13,11 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TeamHackathonDto {
+public class PrizeFullDto {
+
+    private String name;
+    private Integer quantity;
     private HackathonShortDto hackathon;
-    private TeamCreationDto team;
-    private Boolean isWinner = false;
-    private Integer place;
+    private TeamHackathonDto teamHackathon;
 }
-
-
 

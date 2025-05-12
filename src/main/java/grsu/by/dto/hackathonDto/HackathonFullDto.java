@@ -1,10 +1,10 @@
 package grsu.by.dto.hackathonDto;
 
-import grsu.by.dto.ApplicationDto;
-import grsu.by.dto.FeedbackDto;
-import grsu.by.dto.NotificationDto;
-import grsu.by.dto.PrizeDto;
+import grsu.by.dto.applicationDto.ApplicationFullDto;
+import grsu.by.dto.notificationDto.NotificationCreationDto;
+import grsu.by.dto.prizeDto.PrizeCreationDto;
 import grsu.by.dto.TeamHackathonDto;
+import grsu.by.dto.feedbackDto.FeedbackFullDto;
 import grsu.by.dto.solutionDto.SolutionFullDto;
 import grsu.by.dto.userDto.UserBaseDto;
 import jakarta.validation.constraints.NotBlank;
@@ -49,13 +49,13 @@ public class HackathonFullDto implements Serializable {
     private OffsetDateTime assessmentEnd;
     @NotNull
     private OffsetDateTime resultsAnnouncement;
-    private Set<FeedbackDto> feedbacks;
+    private Set<FeedbackFullDto> feedbacks;
     private Set<TeamHackathonDto> teamHackathons;
     private Set<SolutionFullDto> solutions;
-    private Set<NotificationDto> notifications;
-    private Set<ApplicationDto> applications;
+    private Set<NotificationCreationDto> notifications;
+    private Set<ApplicationFullDto> applications;
     private Set<UserBaseDto> judges;
-    private Set<PrizeDto> prizes;
+    private Set<PrizeCreationDto> prizes;
 
 }
 
