@@ -1,7 +1,6 @@
 package grsu.by.dto.solutionDto;
 
-import grsu.by.dto.scoreDto.ScoreCreationDto;
-import grsu.by.dto.feedbackDto.FeedbackFullDto;
+import grsu.by.dto.feedbackDto.FeedbackCreationDto;
 import grsu.by.dto.hackathonDto.HackathonShortDto;
 import grsu.by.dto.teamDto.TeamCreationDto;
 import lombok.AllArgsConstructor;
@@ -28,7 +27,7 @@ public class SolutionFullDto {
     private String filesUrl;
     private Integer totalScore;
     private OffsetDateTime checkedAt;
-    private Set<FeedbackFullDto> feedbacks;
-    private Set<ScoreCreationDto> scores;
+    private Set<FeedbackCreationDto> feedbacks;
+    private Set<SolutionShortDto> scores;
 }
 
