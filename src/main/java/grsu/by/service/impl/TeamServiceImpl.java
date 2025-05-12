@@ -2,7 +2,6 @@ package grsu.by.service.impl;
 
 import grsu.by.dto.teamDto.TeamCreationDto;
 import grsu.by.dto.teamDto.TeamFullDto;
-import grsu.by.entity.Hackathon;
 import grsu.by.entity.Team;
 import grsu.by.entity.TeamHackathon;
 import grsu.by.entity.User;
