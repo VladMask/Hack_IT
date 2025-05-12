@@ -4,8 +4,10 @@ import grsu.by.dto.ApplicationDto;
 import grsu.by.entity.Application;
 import grsu.by.entity.Hackathon;
 import grsu.by.entity.Team;
+import grsu.by.entity.TeamHackathon;
 import grsu.by.repository.ApplicationRepository;
 import grsu.by.repository.HackathonRepository;
+import grsu.by.repository.TeamHackathonRepository;
 import grsu.by.repository.TeamRepository;
 import grsu.by.service.ApplicationService;
 import grsu.by.util.ExceptionUtil;
@@ -27,6 +29,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final TeamRepository teamRepository;
     private final HackathonRepository hackathonRepository;
     private final ModelMapper mapper;
+    private final TeamHackathonRepository teamHackathonRepository;
 
     @Override
     public ApplicationDto create(ApplicationDto dto) {
@@ -101,6 +104,28 @@ public class ApplicationServiceImpl implements ApplicationService {
         return applications.stream()
                 .map(app -> mapper.map(app, ApplicationDto.class))
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public boolean acceptApplication(Long id) {
+        Application application = applicationRepository.findByIdWithDetails(id).orElseThrow(
+                () -> ExceptionUtil.throwEntityNotFoundException(Application.class, id.toString())
+        );
+        application.setIsAccepted(true);
+        return registerTeamForHackathon(application.getTeam(), application.getHackathon());
+    }
+
+    private boolean registerTeamForHackathon(Team team, Hackathon hackathon) {
+        if (teamHackathonRepository.existsByTeamIdAndHackathonId(team.getId(), hackathon.getId())) {
+            return false;
+        }
+
+        TeamHackathon teamHackathon = new TeamHackathon();
+        teamHackathon.setTeam(team);
+        teamHackathon.setHackathon(hackathon);
+
+        teamHackathonRepository.save(teamHackathon);
+        return true;
     }
 }
 

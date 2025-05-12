@@ -43,16 +43,16 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public ScoreDto findById(Long id) {
-        Score score = scoreRepository.findById(new ScoreId(id, id)).orElseThrow(
+    public ScoreDto findById(ScoreId id) {
+        Score score = scoreRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Score.class, id.toString())
         );
         return mapper.map(score, ScoreDto.class);
     }
 
     @Override
-    public ScoreDto update(Long id, ScoreDto newDto) {
-        Score score = scoreRepository.findById(new ScoreId(id, id)).orElseThrow(
+    public ScoreDto update(ScoreId id, ScoreDto newDto) {
+        Score score = scoreRepository.findById(id).orElseThrow(
                 () -> ExceptionUtil.throwEntityNotFoundException(Score.class, id.toString())
         );
         
@@ -64,9 +64,9 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public boolean deleteById(Long id) {
-        scoreRepository.deleteById(new ScoreId(id, id));
-        if (scoreRepository.existsById(new ScoreId(id, id))) {
+    public boolean deleteById(ScoreId id) {
+        scoreRepository.deleteById(id);
+        if (scoreRepository.existsById(id)) {
             throw ExceptionUtil.throwEntityDeletionException(Score.class, id.toString());
         }
         return true;

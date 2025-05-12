@@ -78,4 +78,16 @@ public class ApplicationController {
     public Set<ApplicationDto> getByHackathon(@PathVariable Long hackathonId) {
         return service.findByHackathonId(hackathonId);
     }
+
+    @Operation(summary = "Accepts application for a hackathon", description = "Marks application as accepted and registers a specific team to a specific hackathon")
+    @PostMapping("/{applicationId}")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('JUDGE') or hasAuthority('HACKATHON_CREATOR')")
+    public ResponseEntity<String> acceptApplication(@PathVariable Long applicationId) {
+        if (service.acceptApplication(applicationId)) {
+            return ResponseEntity.ok("Application is accepted");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Application is not accepted");
+        }
+    }
 }

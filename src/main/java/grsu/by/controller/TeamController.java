@@ -69,18 +69,6 @@ public class TeamController {
         }
     }
 
-    @Operation(summary = "Register a team for a hackathon", description = "Registers a specific team to a specific hackathon")
-    @PostMapping("/{teamId}/hackathons/{hackathonId}")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")
-    public ResponseEntity<String> registerTeamForHackathon(@PathVariable Long teamId, @PathVariable Long hackathonId) {
-        if (service.registerTeamForHackathon(teamId, hackathonId)) {
-            return ResponseEntity.ok("Team registered successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An unexpected error has occurred");
-        }
-    }
-
     @Operation(summary = "Unregister a team from a hackathon", description = "Removes a team's registration from a hackathon")
     @DeleteMapping("/{teamId}/hackathons/{hackathonId}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('HACKATHON_CREATOR')")

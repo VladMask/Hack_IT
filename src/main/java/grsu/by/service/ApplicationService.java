@@ -17,4 +17,6 @@ public interface ApplicationService {
     Set<ApplicationDto> findByTeamId(Long teamId);
 
     Set<ApplicationDto> findByHackathonId(Long hackathonId);
+
+    boolean acceptApplication(Long id);
 }

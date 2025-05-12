@@ -1,6 +1,7 @@
 package grsu.by.controller;
 
 import grsu.by.dto.ScoreDto;
+import grsu.by.entity.ScoreId;
 import grsu.by.service.ScoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,10 +36,10 @@ public class ScoreController {
         return service.findAll();
     }
 
-    @Operation(summary = "Get score by ID", description = "Returns a single score by its ID")
-    @GetMapping("/{id}")
-    public ScoreDto getById(@PathVariable Long id) {
-        return service.findById(id);
+    @Operation(summary = "Get score by solutionId and judgeId", description = "Returns a single score by its ID")
+    @GetMapping("/{solutionId}/{judgeId}")
+    public ScoreDto getById(@PathVariable Long solutionId, @PathVariable Long judgeId) {
+        return service.findById(new ScoreId(solutionId, judgeId));
     }
 
     @Operation(summary = "Create score", description = "Creates and returns a new score")
@@ -49,18 +50,18 @@ public class ScoreController {
     }
 
     @Operation(summary = "Update score", description = "Updates and returns the score")
-    @PutMapping("/{id}")
+    @PutMapping("/{solutionId}/{judgeId}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('JUDGE')")
-    public ScoreDto update(@PathVariable Long id, @RequestBody ScoreDto scoreDto) {
-        return service.update(id, scoreDto);
+    public ScoreDto update(@PathVariable Long solutionId, @PathVariable Long judgeId, @RequestBody ScoreDto scoreDto) {
+        return service.update(new ScoreId(solutionId, judgeId), scoreDto);
     }
 
-    @Operation(summary = "Delete score by ID", description = "Deletes the score and returns a status message")
-    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete score by solutionId and judgeId", description = "Deletes the score and returns a status message")
+    @DeleteMapping("/{solutionId}/{judgeId}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('JUDGE')")
-    public ResponseEntity<String> deleteById(@PathVariable Long id) {
-        if (service.deleteById(id)) {
+    public ResponseEntity<String> deleteById(@PathVariable Long solutionId, @PathVariable Long judgeId) {
+        if (service.deleteById(new ScoreId(solutionId, judgeId))) {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("Entity deleted successfully");
