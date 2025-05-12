@@ -13,7 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SolutionShortDto {
-    private Long id;
     @NotNull
     private Long hackathonId;
     private Long teamId;

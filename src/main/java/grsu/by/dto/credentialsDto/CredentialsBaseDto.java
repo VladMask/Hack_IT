@@ -15,7 +15,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class CredentialsBaseDto {
-    private Long id;
     @Email
     private String email;
     @NotBlank

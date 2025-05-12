@@ -13,8 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TeamHackathonDto {
-
-    private Long id;
     @NotNull
     private Long teamId;
     @NotNull

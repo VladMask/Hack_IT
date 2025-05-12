@@ -13,7 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleDto {
-    private Short id;
 
     @NotBlank
     private String name;

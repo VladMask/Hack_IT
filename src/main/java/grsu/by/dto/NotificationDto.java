@@ -14,7 +14,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NotificationDto {
-    private Long id;
 
     @NotBlank
     private String title;

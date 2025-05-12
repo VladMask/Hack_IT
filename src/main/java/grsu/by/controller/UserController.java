@@ -2,6 +2,7 @@ package grsu.by.controller;
 
 import grsu.by.dto.userDto.UserBaseDto;
 import grsu.by.dto.userDto.UserCreationDto;
+import grsu.by.entity.UserTeamId;
 import grsu.by.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -76,6 +77,90 @@ public class UserController {
                     .body("An unexpected error has occurred");
         }
 
+    }
+
+    @PostMapping("/{userId}/teams/{teamId}")
+    public ResponseEntity<String> addUserToTeam(@PathVariable Long userId, @PathVariable Long teamId) {
+        if (service.addUserToTeam(new UserTeamId(userId, teamId))) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("User added to team successfully");
+        }
+        else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error has occurred");
+        }
+    }
+
+    @DeleteMapping("/{userId}/teams/{teamId}")
+    public ResponseEntity<String> removeUserFromTeam(@PathVariable Long userId, @PathVariable Long teamId) {
+        if (service.removeUserFromTeam(new UserTeamId(userId, teamId))) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("User removed from team successfully");
+        }
+        else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error has occurred");
+        }
+    }
+
+    @GetMapping("/{userId}/teams")
+    public ResponseEntity<String> isUserInTeam(@PathVariable Long userId, @RequestParam Long teamId) {
+        if (service.isUserInTeam(new UserTeamId(userId, teamId))) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("User is a team participant");
+        }
+        else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("User is not a team participant");
+        }
+    }
+
+    @PostMapping("/{userId}/roles")
+    public ResponseEntity<String> addRoleToUser(@PathVariable Long userId, @RequestParam String roleName) {
+        if (service.addRoleToUser(userId, roleName)) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Role added successfully");
+        }
+        else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error has occurred");
+        }
+    }
+
+    @DeleteMapping("/{userId}/roles")
+    public ResponseEntity<String> removeRoleFromUser(@PathVariable Long userId, @RequestParam String roleName) {
+        if (service.removeRoleFromUser(userId, roleName)) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Role removed successfully");
+        }
+        else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error has occurred");
+        }
+    }
+
+    @GetMapping("/{userId}/roles")
+    public ResponseEntity<String> hasRole(@PathVariable Long userId, @RequestParam String roleName) {
+        if (service.hasRole(userId, roleName)) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("User has specified role");
+        }
+        else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("User hasn't specified role");
+        }
     }
 }
 

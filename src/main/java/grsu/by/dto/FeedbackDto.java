@@ -14,7 +14,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FeedbackDto {
-    private Long id;
     @NotBlank
     private String content;
     @NotNull

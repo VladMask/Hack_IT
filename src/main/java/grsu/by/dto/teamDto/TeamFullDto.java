@@ -19,7 +19,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TeamFullDto {
-    private Long id;
     @NotBlank
     private String name;
     private Boolean isActive = false;

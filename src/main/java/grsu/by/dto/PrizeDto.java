@@ -14,7 +14,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PrizeDto {
-    private Long id;
 
     @NotBlank
     private String name;

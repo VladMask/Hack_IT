@@ -18,7 +18,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SolutionFullDto {
-    private Long id;
 
     @NotNull
     private Long hackathonId;

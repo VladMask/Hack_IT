@@ -15,5 +15,11 @@ public interface TeamService {
 
     boolean deleteById(Long id);
 
-    Set<TeamFullDto> findAll();
+    Set<TeamCreationDto> findAll();
+
+    boolean registerTeamForHackathon(Long teamId, Long hackathonId);
+
+    boolean unregisterTeamFromHackathon(Long teamId, Long hackathonId);
+
+    boolean isTeamRegisteredForHackathon(Long teamId, Long hackathonId);
 }

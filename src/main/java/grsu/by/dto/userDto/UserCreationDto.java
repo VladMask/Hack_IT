@@ -14,7 +14,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class UserCreationDto {
-    private Long id;
     @NotBlank
     private String firstname;
     @NotBlank

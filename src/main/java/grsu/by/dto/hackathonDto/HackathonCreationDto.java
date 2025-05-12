@@ -19,7 +19,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HackathonCreationDto implements Serializable {
-    private Long id;
     @NotBlank
     private String name;
     @NotBlank

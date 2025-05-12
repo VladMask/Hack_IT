@@ -28,7 +28,7 @@ public class TeamController {
     private final TeamService service;
 
     @GetMapping
-    public Set<TeamFullDto> getAll() {
+    public Set<TeamCreationDto> getAll() {
         return service.findAll();
     }
 
@@ -59,6 +59,48 @@ public class TeamController {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An unexpected error has occurred");
+        }
+    }
+
+    @PostMapping("/{teamId}/hackathons/{hackathonId}")
+    public ResponseEntity<String> registerTeamForHackathon(@PathVariable Long teamId, @PathVariable Long hackathonId) {
+        if (service.registerTeamForHackathon(teamId, hackathonId)) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Team registered successfully");
+        }
+        else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error has occurred");
+        }
+    }
+
+    @DeleteMapping("/{teamId}/hackathons/{hackathonId}")
+    public ResponseEntity<String> unregisterTeamFromHackathon(@PathVariable Long teamId, @PathVariable Long hackathonId) {
+        if (service.unregisterTeamFromHackathon(teamId, hackathonId)) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Team unregistered successfully");
+        }
+        else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error has occurred");
+        }
+    }
+
+    @GetMapping("/{teamId}/hackathons//{hackathonId}")
+    public ResponseEntity<String> isTeamRegisteredForHackathon(@PathVariable Long teamId, @PathVariable Long hackathonId) {
+        if (service.isTeamRegisteredForHackathon(teamId, hackathonId)) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Team is registered for hackathon");
+        }
+        else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Team is not registered for hackathon");
         }
     }
 } 

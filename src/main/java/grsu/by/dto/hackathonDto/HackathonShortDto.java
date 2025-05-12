@@ -17,7 +17,6 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HackathonShortDto implements Serializable {
-    private Long id;
     @NotBlank
     private String name;
     @NotBlank

@@ -2,6 +2,7 @@ package grsu.by.service;
 
 import grsu.by.dto.userDto.UserCreationDto;
 import grsu.by.dto.userDto.UserBaseDto;
+import grsu.by.entity.UserTeamId;
 
 public interface UserService {
 
@@ -14,5 +15,17 @@ public interface UserService {
     boolean deleteById(Long id);
 
     boolean setUserRole(Long userId, String roleName);
+
+    boolean addRoleToUser(Long userId, String roleName);
+
+    boolean removeRoleFromUser(Long userId, String roleName);
+
+    boolean hasRole(Long userId, String roleName);
+
+    boolean isUserInTeam(UserTeamId id);
+
+    boolean addUserToTeam(UserTeamId id);
+
+    boolean removeUserFromTeam(UserTeamId id);
 
 }
